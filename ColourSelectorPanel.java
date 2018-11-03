@@ -5,10 +5,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 
-import java.awt.Color;
-import java.awt.color.*;
 
 public class ColourSelectorPanel extends GridPane implements EventHandler<ActionEvent> {
 
@@ -17,17 +14,15 @@ public class ColourSelectorPanel extends GridPane implements EventHandler<Action
 	public ColourSelectorPanel(View view) {
 		this.view = view;
 		
-		String[] buttonLabels = { "Red", "Blue", "Green", "Yellow", "Orange" };
-		
+		String[] buttonLabels = {"red", "blue", "yellow", "black" , "orange", "Green", "White", "Pink", "Purple"};
 		int row = 0;
 		for (String label : buttonLabels) {
 			Button button = new Button(label);
+			button.setMinWidth(02);
 			this.add(button, row, 0);
-			button.setStyle("Color.BLUE");
-			row ++;
+			row++;
 			button.setOnAction(this);
 		}
-		
 	}
 
 	@Override
