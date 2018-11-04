@@ -6,6 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -22,9 +23,9 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 	private Rectangle rectangle;//the rectangle we can build
 	
 	private boolean fill; // determines whether new shapes should be filled
-	private Color color;
 
 	private Canvas canvas;
+	private Color color;
 
 	public PaintPanel(PaintModel model, View view) {
 
@@ -39,7 +40,6 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 		this.mode = "Circle"; // bad code here?
 
 		this.fill = true;
-
 		this.model = model;
 		this.model.addObserver(this);
 
