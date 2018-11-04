@@ -19,6 +19,8 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 
 	private String mode; // modifies how we interpret input (could be better?)
 	private Circle circle; // the circle we are building
+	
+	private Rectangle rectangle;//the rectangle we can build
 
 	private Canvas canvas;
 
@@ -66,6 +68,20 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 			int y = c.getCentre().getY();
 			int radius = c.getRadius();
 			g.strokeOval((x - (radius/2)), (y - (radius/2)), radius, radius);
+		}
+		
+		//Draw Rectangles
+		ArrayList<Rectangle> rectangles = this.model.getRectangles();
+		for (Rectangle r: rectangles) {
+			Point TopLeft = r.getTopLeft();
+			Point BottomRight = r.getBottomRight();
+			Point BottomLeft = r.getBottomLeft();
+			Point TopRight = r.getTopRight();
+			g.strokeLine(TopLeft.getX(), TopLeft.getY(),TopRight.getX(),TopRight.getY());
+			g.strokeLine(TopLeft.getX(),TopLeft.getY(),BottomLeft.getX(),BottomLeft.getY());
+			g.strokeLine(TopRight.getX(),TopRight.getY(),BottomRight.getX(),BottomRight.getY());
+			g.strokeLine(BottomLeft.getX(), BottomLeft.getY(),BottomRight.getX(),BottomRight.getY());
+			
 		}
 	}
 
@@ -117,6 +133,9 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 		} else if (this.mode == "Circle") {
 
 		}
+		else if (this.mode == "Rectangle") {
+			
+		}
 	}
 
 	private void mouseClicked(MouseEvent e) {
@@ -136,6 +155,12 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 			int radius = 0;
 			this.circle = new Circle(centre, radius);
 		}
+		else if (this.mode == "Rectangle") {
+			Point topLeft = new Point((int) e.getX(), (int)e.getY());
+			this.rectangle = new Rectangle();
+			this.rectangle.setTopLeft(topLeft);
+
+		}
 	}
 
 	private void mouseReleased(MouseEvent e) {
@@ -150,8 +175,16 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 				this.circle = null;
 			}
 		}
+		else if (this.mode == "Rectangle") {
+			Point bottomRight = new Point((int)e.getX(), (int)e.getY());
+			this.rectangle.setBottomRight(bottomRight);
+			
+			this.model.addRectangle(this.rectangle);
+			this.rectangle = null;
+		}
+		}
 
-	}
+	
 
 	private void mouseEntered(MouseEvent e) {
 		if (this.mode == "Squiggle") {
