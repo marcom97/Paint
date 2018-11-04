@@ -1,6 +1,6 @@
 package ca.utoronto.utm.paint;
 
-public class Rectangle {
+public class Rectangle extends Shape {
 	
 	private Point TopLeft;
 	private Point BottomRight;

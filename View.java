@@ -8,6 +8,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class View implements EventHandler<ActionEvent> {
@@ -29,11 +30,16 @@ public class View implements EventHandler<ActionEvent> {
 		this.paintPanel = new PaintPanel(this.model, this);
 		this.shapeChooserPanel = new ShapeChooserPanel(this);
 		this.colourSelectorPanel = new ColourSelectorPanel(this);
+		
+		VBox toolsPanel = new VBox();
+		toolsPanel.setSpacing(10);
+		toolsPanel.getChildren().add(this.shapeChooserPanel);
+		toolsPanel.getChildren().add(new FillStylePanel(this));
 
 		BorderPane root = new BorderPane();
 		root.setTop(createMenuBar());
 		root.setCenter(this.paintPanel);
-		root.setLeft(this.shapeChooserPanel);
+		root.setLeft(toolsPanel);	
 		root.setBottom(this.colourSelectorPanel);
 
 		Scene scene = new Scene(root);
@@ -52,7 +58,6 @@ public class View implements EventHandler<ActionEvent> {
 	
 	public ColourSelectorPanel getColourSelectorPanel() {
 		return colourSelectorPanel;
-		
 	}
 
 	private MenuBar createMenuBar() {

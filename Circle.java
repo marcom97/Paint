@@ -1,6 +1,6 @@
 package ca.utoronto.utm.paint;
 
-public class Circle {
+public class Circle extends Shape {
 	
 	private Point centre;
 	private int radius;
