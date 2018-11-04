@@ -21,6 +21,7 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 	private Circle circle; // the circle we are building
 
 	private Canvas canvas;
+	private Color color;
 
 	public PaintPanel(PaintModel model, View view) {
 
@@ -28,11 +29,12 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 		this.getChildren().add(this.canvas);
 		// The canvas is transparent, so the background color of the
 		// containing pane serves as the background color of the canvas.
-		this.setStyle("-fx-background-color: blue");
+		this.setStyle("-fx-background-color: white");
 
 		this.addEventHandler(MouseEvent.ANY, this);
 
 		this.mode = "Circle"; // bad code here?
+		
 
 		this.model = model;
 		this.model.addObserver(this);
@@ -46,8 +48,6 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 
 		// Clear the canvas
 		g.clearRect(0, 0, this.getWidth(), this.getHeight());
-
-		g.setStroke(Color.WHITE);
 		g.strokeText("i=" + i, 50, 75);
 		i = i + 1;
 
@@ -56,6 +56,7 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 		for (int i = 0; i < points.size() - 1; i++) {
 			Point p1 = points.get(i);
 			Point p2 = points.get(i + 1);
+			g.setStroke(this.color);
 			g.strokeLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
 		}
 
@@ -65,7 +66,9 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 			int x = c.getCentre().getX();
 			int y = c.getCentre().getY();
 			int radius = c.getRadius();
+			g.setStroke(this.color);
 			g.strokeOval((x - (radius/2)), (y - (radius/2)), radius, radius);
+
 		}
 	}
 
@@ -82,6 +85,10 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 	public void setMode(String mode) {
 		this.mode = mode;
 	}
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
 
 	@Override
 	public void handle(MouseEvent event) {

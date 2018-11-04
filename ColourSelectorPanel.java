@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 
 
 
@@ -35,7 +36,8 @@ public class ColourSelectorPanel extends GridPane implements EventHandler<Action
 	@Override
 	public void handle(ActionEvent event) {
 		String command = "Selects Color" + " " +((Button) event.getSource()).getText();
-		this.view.getPaintPanel().setMode(command);
+		Color color = Color.web(((Button) event.getSource()).getText());
+		this.view.getPaintPanel().setColor(color);
 		System.out.println(command);
 	}
 }
