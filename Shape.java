@@ -1,5 +1,6 @@
 package ca.utoronto.utm.paint;
 
+
 public abstract class Shape {
 	private boolean filled;
 	
@@ -18,4 +19,6 @@ public abstract class Shape {
 	public void setFilled(boolean filled) {
 		this.filled = filled;
 	}
+	
+	
 }
