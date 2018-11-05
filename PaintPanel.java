@@ -23,9 +23,9 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 	private Rectangle rectangle;//the rectangle we can build
 	
 	private boolean fill; // determines whether new shapes should be filled
+	private Color color;
 
 	private Canvas canvas;
-	private Color color;
 
 	public PaintPanel(PaintModel model, View view) {
 
@@ -93,6 +93,13 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 			g.strokeLine(TopLeft.getX(),TopLeft.getY(),BottomLeft.getX(),BottomLeft.getY());
 			g.strokeLine(TopRight.getX(),TopRight.getY(),BottomRight.getX(),BottomRight.getY());
 			g.strokeLine(BottomLeft.getX(), BottomLeft.getY(),BottomRight.getX(),BottomRight.getY());
+			
+			if (r.getFilled()) {
+				//Fill Rectangle
+			}
+			else {
+				//Stroke Rectangle
+			}
 		}
 	}
 
@@ -195,7 +202,7 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 				// Problematic notion of radius and centre!!
 				int radius = Math.abs((int) this.circle.getCentre().getX() - (int) e.getX());
 				this.circle.setRadius(radius);
-				this.circle.setFilled(fill);
+				this.circle.setFilled(this.fill);
 				this.model.addCircle(this.circle);
 				this.circle = null;
 			}
@@ -203,6 +210,7 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 		else if (this.mode == "Rectangle") {
 			Point bottomRight = new Point((int)e.getX(), (int)e.getY());
 			this.rectangle.setBottomRight(bottomRight);
+			this.rectangle.setFilled(this.fill);
 			
 			this.model.addRectangle(this.rectangle);
 			this.rectangle = null;
