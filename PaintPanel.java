@@ -52,6 +52,10 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 	public void repaint() {
 
 		GraphicsContext g = this.canvas.getGraphicsContext2D();
+		
+		// Reset GraphicContext settings
+		g.setLineWidth(1);
+		g.setStroke(Color.BLACK);
 
 		// Clear the canvas
 		g.clearRect(0, 0, this.getWidth(), this.getHeight());
@@ -136,6 +140,14 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 	 */
 	public void setFill(boolean fill) {
 		this.fill = fill;
+	}
+	
+	/**
+	 * Set the line thickness for new shapes
+	 * @param thickness line thickness for new shapes
+	 */
+	public void setLineThickness(float thickness) {
+		this.lineThickness = thickness;
 	}
 
 	@Override

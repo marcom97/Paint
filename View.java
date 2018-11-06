@@ -2,6 +2,7 @@ package ca.utoronto.utm.paint;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -18,6 +19,8 @@ public class View implements EventHandler<ActionEvent> {
 	private PaintPanel paintPanel;
 	private ShapeChooserPanel shapeChooserPanel;
 	private ColourSelectorPanel colourSelectorPanel;
+	private FillStylePanel fillStylePanel;
+	private LineThicknessPanel lineThicknessPanel;
 
 	public View(PaintModel model, Stage stage) {
 
@@ -30,11 +33,16 @@ public class View implements EventHandler<ActionEvent> {
 		this.paintPanel = new PaintPanel(this.model, this);
 		this.shapeChooserPanel = new ShapeChooserPanel(this);
 		this.colourSelectorPanel = new ColourSelectorPanel(this);
+		this.fillStylePanel = new FillStylePanel(this);
+		this.lineThicknessPanel = new LineThicknessPanel(this);
+		
+		this.paintPanel.setAlignment(Pos.TOP_LEFT);
 		
 		VBox toolsPanel = new VBox();
 		toolsPanel.setSpacing(10);
 		toolsPanel.getChildren().add(this.shapeChooserPanel);
-		toolsPanel.getChildren().add(new FillStylePanel(this));
+		toolsPanel.getChildren().add(this.fillStylePanel);
+		toolsPanel.getChildren().add(this.lineThicknessPanel);
 
 		BorderPane root = new BorderPane();
 		root.setTop(createMenuBar());
@@ -58,6 +66,14 @@ public class View implements EventHandler<ActionEvent> {
 	
 	public ColourSelectorPanel getColourSelectorPanel() {
 		return colourSelectorPanel;
+	}
+	
+	public FillStylePanel getFillStylePanel() {
+		return fillStylePanel;
+	}
+	
+	public LineThicknessPanel getLineThicknessPanel() {
+		return lineThicknessPanel;
 	}
 
 	private MenuBar createMenuBar() {

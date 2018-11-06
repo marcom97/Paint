@@ -1,6 +1,10 @@
 package ca.utoronto.utm.paint;
 
-
+/**
+ * An abstract class used to represent a shape
+ * @author Marco Matamoros
+ *
+ */
 public abstract class Shape {
 	private boolean filled;
 	private float lineThickness;
