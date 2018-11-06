@@ -23,6 +23,7 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 	private Rectangle rectangle;//the rectangle we can build
 	
 	private boolean fill; // determines whether new shapes should be filled
+	private float lineThickness; // determines the line thickness of new shapes
 	private Color color;
 
 	private Canvas canvas;
@@ -40,6 +41,8 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 		this.mode = "Circle"; // bad code here?
 
 		this.fill = true;
+		this.lineThickness = 5;
+		
 		this.model = model;
 		this.model.addObserver(this);
 
@@ -60,7 +63,10 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 		for (int i = 0; i < points.size() - 1; i++) {
 			Point p1 = points.get(i);
 			Point p2 = points.get(i + 1);
+			
 			g.setStroke(this.color);
+			g.setLineWidth(p2.getLineThickness());
+			
 			g.strokeLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
 		}
 
@@ -72,7 +78,7 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 			int radius = c.getRadius();
 
 			g.setStroke(this.color);
-			g.strokeOval((x - (radius/2)),(y - (radius/2)), radius, radius);
+			g.setLineWidth(c.getLineThickness());
 
 			if (c.getFilled()) {
 				g.fillOval((x - (radius/2)),(y - (radius/2)), radius, radius);
@@ -89,6 +95,9 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 			Point BottomRight = r.getBottomRight();
 			Point BottomLeft = r.getBottomLeft();
 			Point TopRight = r.getTopRight();
+			
+			g.setLineWidth(r.getLineThickness());
+			
 			g.strokeLine(TopLeft.getX(), TopLeft.getY(),TopRight.getX(),TopRight.getY());
 			g.strokeLine(TopLeft.getX(),TopLeft.getY(),BottomLeft.getX(),BottomLeft.getY());
 			g.strokeLine(TopRight.getX(),TopRight.getY(),BottomRight.getX(),BottomRight.getY());
@@ -159,7 +168,9 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 
 	private void mouseDragged(MouseEvent e) {
 		if (this.mode == "Squiggle") {
-			this.model.addPoint(new Point((int) e.getX(), (int) e.getY()));
+			Point p = new Point((int) e.getX(), (int) e.getY());
+			p.setLineThickness(this.lineThickness);
+			this.model.addPoint(p);
 			
 		} else if (this.mode == "Circle") {
 
@@ -203,6 +214,7 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 				int radius = Math.abs((int) this.circle.getCentre().getX() - (int) e.getX());
 				this.circle.setRadius(radius);
 				this.circle.setFilled(this.fill);
+				this.circle.setLineThickness(this.lineThickness);
 				this.model.addCircle(this.circle);
 				this.circle = null;
 			}
@@ -211,6 +223,7 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 			Point bottomRight = new Point((int)e.getX(), (int)e.getY());
 			this.rectangle.setBottomRight(bottomRight);
 			this.rectangle.setFilled(this.fill);
+			this.rectangle.setLineThickness(this.lineThickness);
 			
 			this.model.addRectangle(this.rectangle);
 			this.rectangle = null;
