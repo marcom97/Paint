@@ -43,12 +43,14 @@ public class View implements EventHandler<ActionEvent> {
 		toolsPanel.getChildren().add(this.shapeChooserPanel);
 		toolsPanel.getChildren().add(this.fillStylePanel);
 		toolsPanel.getChildren().add(this.lineThicknessPanel);
+		toolsPanel.getChildren().add(new FillStylePanel(this));
 
 		BorderPane root = new BorderPane();
 		root.setTop(createMenuBar());
 		root.setCenter(this.paintPanel);
 		root.setLeft(toolsPanel);	
 		root.setBottom(this.colourSelectorPanel);
+		
 
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
