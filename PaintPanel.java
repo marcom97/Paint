@@ -119,18 +119,27 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 			
 			g.setLineWidth(r.getLineThickness());
 			
-			g.strokeLine(TopLeft.getX(), TopLeft.getY(),TopRight.getX(),TopRight.getY());
-			g.strokeLine(TopLeft.getX(),TopLeft.getY(),BottomLeft.getX(),BottomLeft.getY());
-			g.strokeLine(TopRight.getX(),TopRight.getY(),BottomRight.getX(),BottomRight.getY());
-			g.strokeLine(BottomLeft.getX(), BottomLeft.getY(),BottomRight.getX(),BottomRight.getY());
-			
-			if (r.getFilled()) {
-				//Fill Rectangle
+			Integer Rectangle_Width = Math.abs((TopRight.getX() - TopLeft.getX()));
+			Integer Rectangle_Height = Math.abs((TopLeft.getY()- BottomLeft.getY()));
+						
+
+			if (r.getFilled() && r.getColored()) {
+				g.setFill(this.color);
+				g.fillRect(TopLeft.getX(), TopLeft.getY(), Rectangle_Width, Rectangle_Height);
+			}
+			else if (r.getColored()) {
+				g.setStroke(this.color);
+				g.strokeRect(TopLeft.getX(), TopLeft.getY(), Rectangle_Width, Rectangle_Height);
 			}
 			else {
-				//Stroke Rectangle
+				g.strokeRect(TopLeft.getX(), TopLeft.getY(), Rectangle_Width, Rectangle_Height);
 			}
 		}
+	}
+
+	private Integer abs(int j) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -220,7 +229,14 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 
 		}
 		else if (this.mode == "Rectangle") {
+			Point Temporary_Rect = new Point((int) e.getX(), (int) e.getY());
 			
+			this.rectangle.setBottomRight(Temporary_Rect);
+			this.rectangle.setFilled(this.fill);
+			this.rectangle.setLineThickness(this.lineThickness);
+			this.rectangle.setColored(this.iscolor);
+			this.model.addRectangle(this.rectangle);
+
 		}
 	}
 
