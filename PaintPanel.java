@@ -240,7 +240,7 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 			this.model.addRectangle(this.rectangle);
 			this.rectangle = null;
 		}
-		}
+	}
 
 	
 
