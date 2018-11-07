@@ -25,7 +25,7 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 	private boolean fill; // determines whether new shapes should be filled
 	private float lineThickness; // determines the line thickness of new shapes
 	private Color color;
-	private boolean iscolor; // determines if new shapes shouldbe colored or not.
+	private boolean iscolor; // determines if new shapes should be colored or not.
 
 
 	private Canvas canvas;
