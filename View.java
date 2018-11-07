@@ -43,7 +43,6 @@ public class View implements EventHandler<ActionEvent> {
 		toolsPanel.getChildren().add(this.shapeChooserPanel);
 		toolsPanel.getChildren().add(this.fillStylePanel);
 		toolsPanel.getChildren().add(this.lineThicknessPanel);
-		toolsPanel.getChildren().add(new FillStylePanel(this));
 
 		BorderPane root = new BorderPane();
 		root.setTop(createMenuBar());

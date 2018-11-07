@@ -40,18 +40,9 @@ public class ColourSelectorPanel extends GridPane implements EventHandler<Action
 	
 	@Override
 	public void handle(ActionEvent event) {
-		String[] colors = {"black", "darkgrey", "maroon", "olive" , "darkgreen", "Green", "darkblue", "darkmagenta", "darkolivegreen", "aliceblue", "Aqua",
-				"beige", "brown", "lightgrey","white", "red","yellow","greenyellow", "lightblue", "blue", "pink", "gold", "violet", "orange", "darksalmon"
-				,"teal", "steelblue","crimson"};
 		String command = "Selects Color" + " " +((Button) event.getSource()).getText();
-		for (String str: colors) {
-			if (((Button) event.getSource()).getText() == str) {
-				Color color = Color.web(((Button) event.getSource()).getText());
-				this.view.getPaintPanel().setColor(color);
-				this.view.getPaintPanel().setiscolor(true);
-				
-			}
-		}
+		Color color = Color.web(((Button) event.getSource()).getText());
+		this.view.getPaintPanel().setColor(color);
 		
 		System.out.println(command);
 	}
