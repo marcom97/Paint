@@ -1,15 +1,18 @@
 package ca.utoronto.utm.paint;
 
+import javafx.scene.paint.Color;
 
 /**
  * An abstract class used to represent a shape
  * @author Marco Matamoros
+ * @author Malaika Zaidi
  *
  */
 public abstract class Shape {
 	private boolean filled;
 	private float lineThickness;
-	private boolean colored;
+	private Color color;
+
 
 	/**
 	 * Return whether this should be filled
@@ -19,8 +22,12 @@ public abstract class Shape {
 		return this.filled;
 	}
 	
-	public boolean getColored() {
-		return this.colored;
+	/**
+	 * Return the color of new shape
+	 * @return	what color should new shape be
+	 */
+	public Color getColor() {
+		return this.color;
 	}
 	
 	
@@ -31,8 +38,12 @@ public abstract class Shape {
 	public void setFilled(boolean filled) {
 		this.filled = filled;
 	}
-	public void setColored(boolean colored) {
-		this.colored = colored;
+	/**
+	 * sets color given by button pressed.
+	 * @param color the color the shapes take on
+	 */
+	public void setColor(Color color) {
+		this.color = color;
 	}
 	
 	/**

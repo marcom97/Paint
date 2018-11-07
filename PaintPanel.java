@@ -24,8 +24,7 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 	
 	private boolean fill; // determines whether new shapes should be filled
 	private float lineThickness; // determines the line thickness of new shapes
-	private Color color;
-	private boolean iscolor; // determines if new shapes should be colored or not.
+	private Color color; // determines if new shapes should be colored or not.
 
 
 	private Canvas canvas;
@@ -46,8 +45,6 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 
 		this.fill = true;
 		this.lineThickness = 1;
-		
-		this.iscolor = false;
 
 		this.model = model;
 		
@@ -62,7 +59,7 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 		
 		// Reset GraphicContext settings
 		g.setLineWidth(1);
-		g.setStroke(Color.BLACK);
+		
 
 		// Clear the canvas
 		g.clearRect(0, 0, this.getWidth(), this.getHeight());
@@ -74,8 +71,7 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 		for (int i = 0; i < points.size() - 1; i++) {
 			Point p1 = points.get(i);
 			Point p2 = points.get(i + 1);
-
-			g.setStroke(this.color);
+			g.setStroke(p2.getColor());
 			g.setLineWidth(p2.getLineThickness());
 
 			g.strokeLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
@@ -87,23 +83,21 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 			int x = c.getCentre().getX();
 			int y = c.getCentre().getY();
 			int radius = c.getRadius();
-			
-			g.setStroke(this.color);
+		
 			g.setLineWidth(c.getLineThickness());
-
+			g.setStroke(c.getColor());
 			g.strokeOval((x - (radius/2)),(y - (radius/2)), radius, radius);
+			g.setFill(c.getColor());
 
-
-			if (c.getFilled() && c.getColored()) {
+			if (c.getFilled()) {
 				g.fillOval((x - (radius/2)),(y - (radius/2)), radius, radius);
-				g.setFill(this.color);
+				
 				
 			}
 			else {
 				g.strokeOval((x - (radius/2)),(y - (radius/2)), radius, radius);
-				if (c.getColored()) {
-					g.setStroke(this.color);
-				}
+				
+			
 			}
 			
 			
@@ -123,17 +117,16 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 			Integer Rectangle_Height = Math.abs((TopLeft.getY()- BottomLeft.getY()));
 						
 
-			if (r.getFilled() && r.getColored()) {
-				g.setFill(this.color);
+			if (r.getFilled()) {
+				g.setFill(r.getColor());
 				g.fillRect(TopLeft.getX(), TopLeft.getY(), Rectangle_Width, Rectangle_Height);
 			}
-			else if (r.getColored()) {
-				g.setStroke(this.color);
-				g.strokeRect(TopLeft.getX(), TopLeft.getY(), Rectangle_Width, Rectangle_Height);
-			}
+	
 			else {
 				g.strokeRect(TopLeft.getX(), TopLeft.getY(), Rectangle_Width, Rectangle_Height);
+				g.setStroke(r.getColor());
 			}
+			
 		}
 	}
 
@@ -157,12 +150,13 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 	}
 	
 	/**
-	 * sets color given by button pressed.
-	 * @param color the color the shapes take on
+	 * Set the color for each new shape
+	 * @param color color of the new shapes
 	 */
 	public void setColor(Color color) {
 		this.color = color;
 	}
+	
 	
 	/**
 	 * Set whether new shapes should be filled
@@ -181,15 +175,6 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 		
 	}
 
-		
-	/**
-	 * Sets whether the shapes should be colored
-	 * @param iscolor tells us if shapes should be colored
-	 */
-	public void setiscolor(boolean iscolor) {
-		this.iscolor = iscolor;
-
-	}
 	
 	@Override
 	public void handle(MouseEvent event) {
@@ -223,6 +208,7 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 		if (this.mode == "Squiggle") {
 			Point p = new Point((int) e.getX(), (int) e.getY());
 			p.setLineThickness(this.lineThickness);
+			p.setColor(this.color);
 			this.model.addPoint(p);
 			
 		} else if (this.mode == "Circle") {
@@ -234,7 +220,7 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 			this.rectangle.setBottomRight(Temporary_Rect);
 			this.rectangle.setFilled(this.fill);
 			this.rectangle.setLineThickness(this.lineThickness);
-			this.rectangle.setColored(this.iscolor);
+			this.rectangle.setColor(this.color);
 			this.model.addRectangle(this.rectangle);
 
 		}
@@ -275,7 +261,7 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 				this.circle.setRadius(radius);
 				this.circle.setFilled(this.fill);
 				this.circle.setLineThickness(this.lineThickness);
-				this.circle.setColored(this.iscolor);
+				this.circle.setColor(this.color);
 				this.model.addCircle(this.circle);
 				this.circle = null;
 			}
@@ -286,7 +272,7 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 			this.rectangle.setFilled(this.fill);
 			this.rectangle.setLineThickness(this.lineThickness);
 
-			this.rectangle.setColored(this.iscolor);
+			this.rectangle.setColor(this.color);
 
 			this.model.addRectangle(this.rectangle);
 			this.rectangle = null;
