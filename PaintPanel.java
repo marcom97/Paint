@@ -112,13 +112,14 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 			Point TopRight = r.getTopRight();
 			
 			g.setLineWidth(r.getLineThickness());
+			g.setFill(r.getColor());
+			
 			
 			Integer Rectangle_Width = Math.abs((TopRight.getX() - TopLeft.getX()));
 			Integer Rectangle_Height = Math.abs((TopLeft.getY()- BottomLeft.getY()));
 						
 
 			if (r.getFilled()) {
-				g.setFill(r.getColor());
 				g.fillRect(TopLeft.getX(), TopLeft.getY(), Rectangle_Width, Rectangle_Height);
 			}
 	
