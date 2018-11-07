@@ -1,5 +1,6 @@
 package ca.utoronto.utm.paint;
 
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -23,7 +24,7 @@ public class ColourSelectorPanel extends GridPane implements EventHandler<Action
 			button.setTextFill(null);
 			button.setPrefWidth(3);
 			
-			if (row <= 13) {
+			if (row <= 13){
 				this.add(button, row, 0);
 				row++;
 			}
