@@ -315,6 +315,7 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 			this.model.addRectangle(this.rectangle);
 			this.rectangle = null;
 		}
+	}
 
 	private void mouseEntered(MouseEvent e) {
 		if (this.mode == "Squiggle") {
