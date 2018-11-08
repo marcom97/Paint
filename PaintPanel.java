@@ -176,6 +176,32 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 		s.setLineThickness(this.lineThickness);
 		s.setColor(this.color);
 	}
+	
+	/**
+	 * Return the vertex obtained by adjusting the specified point so that 
+	 * it creates a square with the current rectangle's first vertex.
+	 * @param p the point to adjust
+	 * @return the square's vertex obtained from p
+	 */
+	private Point getSquareVertex(Point p) {
+		Point v = this.rectangle.getVertex();
+		
+		int xDiff = p.getX() - v.getX();
+		int yDiff = p.getY() - v.getY();
+		int width = Math.abs(xDiff);
+		int height = Math.abs(yDiff);
+		
+		Point vertex = new Point(p.getX(), p.getY());
+		
+		if (height > width) {
+			vertex.setX(v.getX() + (int)((double)height/width * xDiff));
+		}
+		else if (height < width) {
+			vertex.setY(v.getY() + (int)((double)width/height * yDiff));
+		}
+		
+		return vertex;
+	}
 
 	
 	@Override
@@ -221,7 +247,11 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 		else if (this.mode == "Rectangle") {
 			Point vertex = new Point((int) e.getX(), (int) e.getY());
 			this.rectangle.setOppositeVertex(vertex);
+			
 			this.model.addRectangle(this.rectangle);
+		}
+		else if (this.mode == "Square") {
+			
 		}
 	}
 
@@ -244,7 +274,7 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 							
 			setDefaultModifiers(this.circle);
 		}
-		else if (this.mode == "Rectangle") {
+		else if (this.mode == "Rectangle" || this.mode == "Square") {
 			Point vertex = new Point((int) e.getX(), (int)e.getY());
 			this.rectangle = new Rectangle(vertex, vertex);	
 			
@@ -272,9 +302,14 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 			this.model.addRectangle(this.rectangle);
 			this.rectangle = null;
 		}
+		else if (this.mode == "Square") {
+			Point p = new Point((int)e.getX(), (int)e.getY());
+			this.rectangle.setOppositeVertex(getSquareVertex(p));
+			
+			this.model.addRectangle(this.rectangle);
+			this.rectangle = null;
+		}
 	}
-
-	
 
 	private void mouseEntered(MouseEvent e) {
 		if (this.mode == "Squiggle") {
