@@ -100,7 +100,7 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 				
 			}
 			else {
-				g.strokeOval((x - (radius/2)),(y - (radius/2)), radius, radius);
+				g.strokeOval((x - (radius/2)),(y - (radius/2)), radius , radius );
 				if (c.getColored()) {
 					g.setStroke(this.color);
 				}
@@ -225,10 +225,13 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 			this.model.addPoint(p);
 			
 		} else if (this.mode == "Circle") {
-			Point Temp_circle = new Point((int) e.getX(), (int) e.getY());
-			int temp_radius = Math.abs(Temp_circle.getX() - Temp_circle.getY());
-			this.circle.setCentre(Temp_circle);
-			this.circle.setRadius(Temp_circle.getX());
+			Point temp_circle = new Point((int) e.getX(), (int) e.getY());
+			System.out.println("Let's see what this does" + temp_circle.getX());
+			System.out.println("Let's see what this does Y" + temp_circle.getY());
+			int xdiff = Math.abs((int) temp_circle.x - (int) this.circle.getCentre().x);
+			int ydiff = Math.abs((int) temp_circle.y - (int) this.circle.getCentre().y);
+			int t_radius = (int) Math.hypot(xdiff, ydiff);
+			this.circle.setRadius(t_radius);
 			this.circle.setFilled(this.fill);
 			this.circle.setLineThickness(this.lineThickness);
 			this.circle.setColored(this.iscolor);
@@ -276,19 +279,18 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 	private void mouseReleased(MouseEvent e) {
 		if (this.mode == "Squiggle") {
 
-		} else if (this.mode == "Circle") {
-			if (this.circle != null) {
+		}else if (this.mode == "Circle") {
+			//if (this.circle != null) {
 				// Problematic notion of radius and centre!!
-				int radius = Math.abs((int) this.circle.getCentre().getX() - (int) e.getX());
-				this.circle.setRadius(radius);
-				this.circle.setFilled(this.fill);
-				this.circle.setLineThickness(this.lineThickness);
-				this.circle.setColored(this.iscolor);
-				this.model.addCircle(this.circle);
-				this.circle = null;
+			int radius = Math.abs((int) this.circle.getCentre().getX() - (int) e.getX());
+			this.circle.setRadius(radius);
+			this.circle.setFilled(this.fill);
+			this.circle.setLineThickness(this.lineThickness);
+			this.circle.setColored(this.iscolor);
+			this.model.addCircle(this.circle);
+			this.circle = null;
 			}
-		}
-		else if (this.mode == "Rectangle") {
+		 else if (this.mode == "Rectangle") {
 			Point bottomRight = new Point((int)e.getX(), (int)e.getY());
 			this.rectangle.setBottomRight(bottomRight);
 			this.rectangle.setFilled(this.fill);
