@@ -253,7 +253,10 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 			this.model.addRectangle(this.rectangle);
 		}
 		else if (this.mode == "Square") {
+			Point vertex1 = new Point((int) e.getX(), (int) e.getY());
+			this.rectangle.setOppositeVertex(this.getSquareVertex(vertex1));
 			
+			this.model.addRectangle(this.rectangle);
 		}
 	}
 
