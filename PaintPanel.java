@@ -59,7 +59,8 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 		
 		// Reset GraphicContext settings
 		g.setLineWidth(1);
-		
+		g.setStroke(Color.BLACK);
+		g.setFill(Color.BLACK);
 
 		// Clear the canvas
 		g.clearRect(0, 0, this.getWidth(), this.getHeight());
@@ -106,28 +107,18 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 		//Draw Rectangles
 		ArrayList<Rectangle> rectangles = this.model.getRectangles();
 		for (Rectangle r: rectangles) {
-			Point TopLeft = r.getTopLeft();
-			Point BottomRight = r.getBottomRight();
-			Point BottomLeft = r.getBottomLeft();
-			Point TopRight = r.getTopRight();
-			
 			g.setLineWidth(r.getLineThickness());
 			g.setFill(r.getColor());
-			
-			
-			Integer Rectangle_Width = Math.abs((TopRight.getX() - TopLeft.getX()));
-			Integer Rectangle_Height = Math.abs((TopLeft.getY()- BottomLeft.getY()));
-						
+			g.setStroke(r.getColor());
 
+			Point topLeft = r.getTopLeft();
 			if (r.getFilled()) {
-				g.fillRect(TopLeft.getX(), TopLeft.getY(), Rectangle_Width, Rectangle_Height);
+				g.fillRect(topLeft.getX(), topLeft.getY(), r.getWidth(), r.getHeight());
 			}
 	
 			else {
-				g.strokeRect(TopLeft.getX(), TopLeft.getY(), Rectangle_Width, Rectangle_Height);
-				g.setStroke(r.getColor());
+				g.strokeRect(topLeft.getX(), topLeft.getY(), r.getWidth(), r.getHeight());
 			}
-			
 		}
 	}
 
@@ -175,6 +166,16 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 		this.lineThickness = thickness;
 		
 	}
+	
+	/**
+	 * Set all default modifiers for a shape
+	 * @param s shape to set modifiers for
+	 */
+	private void setDefaultModifiers(Shape s) {
+		s.setFilled(this.fill);
+		s.setLineThickness(this.lineThickness);
+		s.setColor(this.color);
+	}
 
 	
 	@Override
@@ -208,22 +209,19 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 	private void mouseDragged(MouseEvent e) {
 		if (this.mode == "Squiggle") {
 			Point p = new Point((int) e.getX(), (int) e.getY());
+			
 			p.setLineThickness(this.lineThickness);
 			p.setColor(this.color);
+			
 			this.model.addPoint(p);
 			
 		} else if (this.mode == "Circle") {
 
 		}
 		else if (this.mode == "Rectangle") {
-			Point Temporary_Rect = new Point((int) e.getX(), (int) e.getY());
-			
-			this.rectangle.setBottomRight(Temporary_Rect);
-			this.rectangle.setFilled(this.fill);
-			this.rectangle.setLineThickness(this.lineThickness);
-			this.rectangle.setColor(this.color);
+			Point vertex = new Point((int) e.getX(), (int) e.getY());
+			this.rectangle.setOppositeVertex(vertex);
 			this.model.addRectangle(this.rectangle);
-
 		}
 	}
 
@@ -243,12 +241,14 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 			Point centre = new Point((int) e.getX(), (int) e.getY());
 			int radius = 0;
 			this.circle = new Circle(centre, radius);
+							
+			setDefaultModifiers(this.circle);
 		}
 		else if (this.mode == "Rectangle") {
-			Point topLeft = new Point((int) e.getX(), (int)e.getY());
-			this.rectangle = new Rectangle();
-			this.rectangle.setTopLeft(topLeft);
-
+			Point vertex = new Point((int) e.getX(), (int)e.getY());
+			this.rectangle = new Rectangle(vertex, vertex);	
+			
+			setDefaultModifiers(this.rectangle);			
 		}
 	}
 
@@ -260,21 +260,15 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 				// Problematic notion of radius and centre!!
 				int radius = Math.abs((int) this.circle.getCentre().getX() - (int) e.getX());
 				this.circle.setRadius(radius);
-				this.circle.setFilled(this.fill);
-				this.circle.setLineThickness(this.lineThickness);
-				this.circle.setColor(this.color);
+
 				this.model.addCircle(this.circle);
 				this.circle = null;
 			}
 		}
 		else if (this.mode == "Rectangle") {
-			Point bottomRight = new Point((int)e.getX(), (int)e.getY());
-			this.rectangle.setBottomRight(bottomRight);
-			this.rectangle.setFilled(this.fill);
-			this.rectangle.setLineThickness(this.lineThickness);
-
-			this.rectangle.setColor(this.color);
-
+			Point vertex = new Point((int)e.getX(), (int)e.getY());
+			this.rectangle.setOppositeVertex(vertex);
+			
 			this.model.addRectangle(this.rectangle);
 			this.rectangle = null;
 		}
