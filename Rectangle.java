@@ -4,36 +4,56 @@ import javafx.scene.paint.Paint;
 
 public class Rectangle extends Shape {
 	
-	private Point TopLeft;
-	private Point BottomRight;
+	private Point vertex;
+	private Point oppositeVertex;
+	private Point topLeft;
+	private int width;
+	private int height;
 	
-	public Rectangle() {
-	}
-	public void setTopLeft (Point topLeft) {
-		this.TopLeft = topLeft;
-	}
-	
-	public void setBottomRight(Point bottomRight) {
-		this.BottomRight = bottomRight;
+	public Rectangle(Point vertex, Point oppositeVertex) {
+		this.vertex = vertex;
+		this.oppositeVertex = oppositeVertex;
 	}
 	
+		public Point getVertex() {
+		return this.vertex;
+	}
+		
+	public void setVertex(Point vertex) {
+		this.vertex = vertex;
+		vertexChanged();
+	}
+
+	public Point getOppositeVertex() {
+		return this.oppositeVertex;
+	}
+
+	public void setOppositeVertex(Point oppositeVertex) {
+		this.oppositeVertex = oppositeVertex;
+		vertexChanged();
+	}
+	
+	/**
+	 * Recalculate the topLeft vertex as well as the width and height of this. 
+	 */
+	private void vertexChanged() {
+		int x = Math.min(this.vertex.getX(), this.oppositeVertex.getX());
+		int y = Math.min(this.vertex.getY(), this.oppositeVertex.getY());
+		this.topLeft = new Point(x, y);
+		
+		this.width = Math.abs(this.oppositeVertex.getX() - this.vertex.getX());
+		this.height = Math.abs(this.oppositeVertex.getY() - this.vertex.getY());
+	}
+
 	public Point getTopLeft() {
-		return this.TopLeft;
-	}
-	
-	public Point getBottomRight() {
-		return this.BottomRight;
-	}
-	public Point getBottomLeft() {
-		Point BottomLeft = new Point(TopLeft.getX(),BottomRight.getY());
-		return BottomLeft;
+		return this.topLeft;
 	}
 
-	
-	public Point getTopRight() {
-		Point TopRight = new Point(BottomRight.getX(),TopLeft.getY());
-		return TopRight;
+	public int getWidth() {
+		return this.width;
 	}
-	
 
+	public int getHeight() {
+		return this.height;
+	}
 }
