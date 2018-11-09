@@ -1,6 +1,6 @@
 package ca.utoronto.utm.paint;
 
-public class Point extends Shape {
+public class Point extends Shape{
 	int x, y;
 
 	Point(int x, int y) {
