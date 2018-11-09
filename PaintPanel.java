@@ -236,10 +236,11 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 			this.model.addPoint(p);
 			
 		} else if (this.mode == "Circle") {
-			Point Temp_circle = new Point((int) e.getX(), (int) e.getY());
-			int temp_radius = Math.abs(Temp_circle.getX() - Temp_circle.getY());
-			this.circle.setCentre(Temp_circle);
-			this.circle.setRadius(Temp_circle.getX());
+			Point temp_circle = new Point((int) e.getX(), (int) e.getY());
+			int xdiff = Math.abs((int) temp_circle.getX() - (int) this.circle.getCentre().getX());
+			int ydiff = Math.abs((int)temp_circle.getY() - (int) this.circle.getCentre().getY());
+			int thisradius = (int) Math.hypot(xdiff, ydiff);
+			this.circle.setRadius(thisradius);
 			this.circle.setFilled(this.fill);
 			this.circle.setLineThickness(this.lineThickness);
 			this.circle.setColor(this.color);
@@ -293,8 +294,9 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 		} else if (this.mode == "Circle") {
 			if (this.circle != null) {
 				// Problematic notion of radius and centre!!
-				
-				int radius = Math.abs((int) this.circle.getCentre().getX() - (int) e.getX());
+				int xdiff = Math.abs((int) this.circle.getCentre().getX() - (int) e.getX());
+				int ydiff = Math.abs((int) this.circle.getCentre().getY() - (int) e.getY());
+				int radius = (int) Math.hypot(xdiff, ydiff);
 				this.circle.setRadius(radius);
 
 				this.model.addCircle(this.circle);
