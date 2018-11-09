@@ -21,6 +21,7 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 	private String mode; // modifies how we interpret input (could be better?)
 	private Circle circle; // the circle we are building
 	private Rectangle rectangle;//the rectangle we can build
+	private Squiggle squiggle;
 	
 	private boolean fill; // determines whether new shapes should be filled
 	private float lineThickness; // determines the line thickness of new shapes
@@ -74,9 +75,13 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 			g.setStroke(p1.getColor());
 			g.setStroke(p2.getColor());
 			g.setLineWidth(p2.getLineThickness());
+						
 		
 			g.strokeLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+				
 		}
+		
+		
 
 		// Draw Circles
 		ArrayList<Circle> circles = this.model.getCircles();
@@ -111,14 +116,14 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 			Point BottomRight = r.getBottomRight();
 			Point BottomLeft = r.getBottomLeft();
 			Point TopRight = r.getTopRight();
-			
+		
 			g.setLineWidth(r.getLineThickness());
 			g.setFill(r.getColor());
-			
+		
 			
 			Integer Rectangle_Width = Math.abs((TopRight.getX() - TopLeft.getX()));
 			Integer Rectangle_Height = Math.abs((TopLeft.getY()- BottomLeft.getY()));
-						
+					
 
 			if (r.getFilled()) {
 				g.fillRect(TopLeft.getX(), TopLeft.getY(), Rectangle_Width, Rectangle_Height);
@@ -128,9 +133,10 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 				g.strokeRect(TopLeft.getX(), TopLeft.getY(), Rectangle_Width, Rectangle_Height);
 				g.setStroke(r.getColor());
 			}
-			
 		}
 	}
+			
+	
 
 	private Integer abs(int j) {
 		// TODO Auto-generated method stub
@@ -200,7 +206,8 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 
 	private void mouseMoved(MouseEvent e) {
 		if (this.mode == "Squiggle") {
-
+			
+	
 		} else if (this.mode == "Circle") {
 
 		}
@@ -208,12 +215,10 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 
 	private void mouseDragged(MouseEvent e) {
 		if (this.mode == "Squiggle") {
-			Point p = new Point((int) e.getX(), (int) e.getY());
-			p.setLineThickness(this.lineThickness);
-			p.setColor(this.color);
-			this.model.addPoint(p);
 			
-		} else if (this.mode == "Circle") {
+			}
+			
+		else if (this.mode == "Circle") {
 
 		}
 		else if (this.mode == "Rectangle") {
@@ -230,7 +235,7 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 
 	private void mouseClicked(MouseEvent e) {
 		if (this.mode == "Squiggle") {
-
+			
 		} else if (this.mode == "Circle") {
 
 		}
@@ -238,7 +243,8 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 
 	private void mousePressed(MouseEvent e) {
 		if (this.mode == "Squiggle") {
-
+			
+			
 		} else if (this.mode == "Circle") {
 			// Problematic notion of radius and centre!!
 			Point centre = new Point((int) e.getX(), (int) e.getY());
@@ -255,6 +261,7 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 
 	private void mouseReleased(MouseEvent e) {
 		if (this.mode == "Squiggle") {
+			
 			
 		} else if (this.mode == "Circle") {
 			if (this.circle != null) {
@@ -285,7 +292,7 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 
 	private void mouseEntered(MouseEvent e) {
 		if (this.mode == "Squiggle") {
-
+			
 		} else if (this.mode == "Circle") {
 
 		}

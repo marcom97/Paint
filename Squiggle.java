@@ -1,26 +1,29 @@
 package ca.utoronto.utm.paint;
 
 public class Squiggle extends Shape{
-	Point p1,p2;
+	private Point start;
+	private Point end;
 	
-	public Squiggle(Point p1, Point p2) {
-		this.p1 = p1;
-		this.p2 = p2;
+	public Squiggle(Point start, Point end) {
+		this.start = start;
+		this.end = end;
+	
 	}
-	public Point getPoint1() {
-		return p1;
-	}
-
-	public void setPoint1(Point p1) {
-		this.p1 = p1;
+	public Point getStart() {
+		return start;
 	}
 
-	public Point getPoint2() {
-		return p2;
+	public void setStart(Point start) {
+		this.start = start;
+	}
+	
+	public Point getEnd() {
+		return end;
 	}
 
-	public void setPoint2(Point p2) {
-		this.p2 = p2;
+	public void setEnd(Point end) {
+		this.end = end;
 	}
+	
 
 }
