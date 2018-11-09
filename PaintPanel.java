@@ -18,18 +18,13 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 	private PaintModel model; // slight departure from MVC, because of the way painting works
 	private View view; // So we can talk to our parent or other components of the view
 
-	private String mode; // modifies how we interpret input (could be better?)
-	private Circle circle; // the circle we are building
-	private Rectangle rectangle;//the rectangle we can build
+	private ShapeMode mode; // modifies how we interpret input
 	
 	private boolean fill; // determines whether new shapes should be filled
 	private float lineThickness; // determines the line thickness of new shapes
 	private Color color; // determines if new shapes should be colored or not.
 
-
 	private Canvas canvas;
-
-
 
 	public PaintPanel(PaintModel model, View view) {
 
@@ -41,14 +36,17 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 
 		this.addEventHandler(MouseEvent.ANY, this);
 
-		this.mode = "Circle"; // bad code here?
-
+		this.model = model;
+		this.model.addObserver(this);
+		
+		ShapeModeCreator shapeModeCreator = ShapeModeCreator.getInstance();
+		shapeModeCreator.setPaintPanel(this);
+		shapeModeCreator.setModel(this.model);
+		this.mode = shapeModeCreator.createShapeMode("Circle");
+		
 		this.fill = true;
 		this.lineThickness = 1;
-
-		this.model = model;
-		
-		this.model.addObserver(this);
+		this.color = Color.BLACK;
 
 		this.view = view;
 	}
@@ -87,21 +85,14 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 		
 			g.setLineWidth(c.getLineThickness());
 			g.setStroke(c.getColor());
-			g.strokeOval((x - (radius/2)),(y - (radius/2)), radius, radius);
 			g.setFill(c.getColor());
 
 			if (c.getFilled()) {
-				g.fillOval((x - (radius/2)),(y - (radius/2)), radius, radius);
-				
-				
+				g.fillOval((x - (radius/2)),(y - (radius/2)), radius, radius);		
 			}
 			else {
 				g.strokeOval((x - (radius/2)),(y - (radius/2)), radius, radius);
-				
-			
 			}
-			
-			
 		}
 		
 		//Draw Rectangles
@@ -124,7 +115,6 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 
 	@Override
 	public void update(Observable o, Object arg) {
-
 		// Not exactly how MVC works, but similar.
 		this.repaint();
 	}
@@ -133,7 +123,11 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 	 * Controller aspect of this
 	 */
 	public void setMode(String mode) {
-		this.mode = mode;
+		this.mode = ShapeModeCreator.getInstance().createShapeMode(mode);
+	}
+	
+	public Color getColor() {
+		return this.color;
 	}
 	
 	/**
@@ -144,6 +138,9 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 		this.color = color;
 	}
 	
+	public boolean getFill() {
+		return this.fill;
+	}
 	
 	/**
 	 * Set whether new shapes should be filled
@@ -153,182 +150,20 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 		this.fill = fill;
 	}
 	
+	public float getLineThickness() {
+		return this.lineThickness;
+	}
+	
 	/**
 	 * Set the line thickness for new shapes
 	 * @param thickness line thickness for new shapes
 	 */
 	public void setLineThickness(float thickness) {
 		this.lineThickness = thickness;
-		
-	}
-	
-	/**
-	 * Set all default modifiers for a shape
-	 * @param s shape to set modifiers for
-	 */
-	private void setDefaultModifiers(Shape s) {
-		s.setFilled(this.fill);
-		s.setLineThickness(this.lineThickness);
-		s.setColor(this.color);
-	}
-	
-	/**
-	 * Return the vertex obtained by adjusting the specified point so that 
-	 * it creates a square with the current rectangle's first vertex.
-	 * @param p the point to adjust
-	 * @return the square's vertex obtained from p
-	 */
-	private Point getSquareVertex(Point p) {
-		Point v = this.rectangle.getVertex();
-		
-		int xDiff = p.getX() - v.getX();
-		int yDiff = p.getY() - v.getY();
-		int width = Math.abs(xDiff);
-		int height = Math.abs(yDiff);
-		
-		Point vertex = new Point(p.getX(), p.getY());
-		
-		if (height > width) {
-			vertex.setX(v.getX() + (int)((double)height/width * xDiff));
-		}
-		else if (height < width) {
-			vertex.setY(v.getY() + (int)((double)width/height * yDiff));
-		}
-		
-		return vertex;
 	}
 
-	
 	@Override
 	public void handle(MouseEvent event) {
-
-		if (event.getEventType() == MouseEvent.MOUSE_DRAGGED) {
-			mouseDragged(event);
-		} else if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
-			mousePressed(event);
-		} else if (event.getEventType() == MouseEvent.MOUSE_MOVED) {
-			mouseMoved(event);
-		} else if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
-			mouseClicked(event);
-		} else if (event.getEventType() == MouseEvent.MOUSE_RELEASED) {
-			mouseReleased(event);
-		} else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
-			mouseEntered(event);
-		} else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
-			mouseExited(event);
-		}
-	}
-
-	private void mouseMoved(MouseEvent e) {
-		if (this.mode == "Squiggle") {
-
-		} else if (this.mode == "Circle") {
-		}
-	}
-
-	private void mouseDragged(MouseEvent e) {
-		if (this.mode == "Squiggle") {
-			Point p = new Point((int) e.getX(), (int) e.getY());
-			
-			p.setLineThickness(this.lineThickness);
-			p.setColor(this.color);
-			
-			this.model.addPoint(p);
-			
-		} else if (this.mode == "Circle") {
-			Point Temp_circle = new Point((int) e.getX(), (int) e.getY());
-			int temp_radius = Math.abs(Temp_circle.getX() - Temp_circle.getY());
-			this.circle.setCentre(Temp_circle);
-			this.circle.setRadius(Temp_circle.getX());
-			this.circle.setFilled(this.fill);
-			this.circle.setLineThickness(this.lineThickness);
-			this.circle.setColor(this.color);
-			this.model.addCircle(this.circle);
-
-		}
-		else if (this.mode == "Rectangle") {
-			Point vertex = new Point((int) e.getX(), (int) e.getY());
-			this.rectangle.setOppositeVertex(vertex);
-			
-			this.model.addRectangle(this.rectangle);
-		}
-		else if (this.mode == "Square") {
-			Point vertex1 = new Point((int) e.getX(), (int) e.getY());
-			this.rectangle.setOppositeVertex(this.getSquareVertex(vertex1));
-			
-			this.model.addRectangle(this.rectangle);
-		}
-	}
-
-	private void mouseClicked(MouseEvent e) {
-		if (this.mode == "Squiggle") {
-
-		} else if (this.mode == "Circle") {
-
-		}
-	}
-
-	private void mousePressed(MouseEvent e) {
-		if (this.mode == "Squiggle") {
-
-		} else if (this.mode == "Circle") {
-			// Problematic notion of radius and centre!!
-			Point centre = new Point((int) e.getX(), (int) e.getY());
-			int radius = 0;
-			this.circle = new Circle(centre, radius);
-							
-			setDefaultModifiers(this.circle);
-		}
-		else if (this.mode == "Rectangle" || this.mode == "Square") {
-			Point vertex = new Point((int) e.getX(), (int)e.getY());
-			this.rectangle = new Rectangle(vertex, vertex);	
-			
-			setDefaultModifiers(this.rectangle);			
-		}
-	}
-
-	private void mouseReleased(MouseEvent e) {
-		if (this.mode == "Squiggle") {
-
-		} else if (this.mode == "Circle") {
-			if (this.circle != null) {
-				// Problematic notion of radius and centre!!
-				int radius = Math.abs((int) this.circle.getCentre().getX() - (int) e.getX());
-				this.circle.setRadius(radius);
-
-				this.model.addCircle(this.circle);
-				this.circle = null;
-			}
-		}
-		else if (this.mode == "Rectangle") {
-			Point vertex = new Point((int)e.getX(), (int)e.getY());
-			this.rectangle.setOppositeVertex(vertex);
-			
-			this.model.addRectangle(this.rectangle);
-			this.rectangle = null;
-		}
-		else if (this.mode == "Square") {
-			Point p = new Point((int)e.getX(), (int)e.getY());
-			this.rectangle.setOppositeVertex(getSquareVertex(p));
-			
-			this.model.addRectangle(this.rectangle);
-			this.rectangle = null;
-		}
-	}
-
-	private void mouseEntered(MouseEvent e) {
-		if (this.mode == "Squiggle") {
-
-		} else if (this.mode == "Circle") {
-
-		}
-	}
-
-	private void mouseExited(MouseEvent e) {
-		if (this.mode == "Squiggle") {
-
-		} else if (this.mode == "Circle") {
-
-		}
+		this.mode.handleMouseEvent(event);
 	}
 }

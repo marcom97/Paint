@@ -32,7 +32,7 @@ public abstract class ShapeMode {
 		this.paintPanel = paintPanel;
 	}
 	
-		protected PaintModel getModel() {
+	protected PaintModel getModel() {
 		return model;
 	}
 		

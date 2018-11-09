@@ -21,11 +21,23 @@ public class ShapeModeCreator {
 		ShapeMode shapeMode;
 		
 		switch (mode) {
-			case "Rectangle":
-				shapeMode = new RectangleMode();
-				break;
-			default:
-				return null;
+		case "Squiggle":
+			shapeMode = new SquiggleMode();
+			break;
+		case "Circle":
+			shapeMode = new CircleMode();
+			break;
+		case "Rectangle":
+			shapeMode = new RectangleMode();
+			break;
+		case "Square":
+			shapeMode = new SquareMode();
+			break;
+		case "Polyline":
+			shapeMode = new PolylineMode();
+			break;
+		default:
+			return null;
 		}
 		
 		shapeMode.setPaintPanel(paintPanel);

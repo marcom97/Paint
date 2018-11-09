@@ -13,7 +13,6 @@ public abstract class Shape {
 	private float lineThickness;
 	private Color color;
 
-
 	/**
 	 * Return whether this should be filled
 	 * @return	should this be filled
@@ -30,7 +29,6 @@ public abstract class Shape {
 		return this.color;
 	}
 	
-	
 	/**
 	 * Set whether this should be filled
 	 * @param filled should this be filled
@@ -38,12 +36,14 @@ public abstract class Shape {
 	public void setFilled(boolean filled) {
 		this.filled = filled;
 	}
+	
 	/**
 	 * sets color given by button pressed.
 	 * @param color the color the shapes take on
 	 */
 	public void setColor(Color color) {
 		this.color = color;
+		System.out.println("Color changed");
 	}
 	
 	/**
