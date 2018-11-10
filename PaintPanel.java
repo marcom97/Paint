@@ -21,6 +21,7 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 	private String mode; // modifies how we interpret input (could be better?)
 	private Circle circle; // the circle we are building
 	private Rectangle rectangle;//the rectangle we can build
+	private Polyline polyline;
 	
 	private boolean fill; // determines whether new shapes should be filled
 	private float lineThickness; // determines the line thickness of new shapes
@@ -119,6 +120,17 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 			else {
 				g.strokeRect(topLeft.getX(), topLeft.getY(), r.getWidth(), r.getHeight());
 			}
+		}
+		
+		ArrayList<Polyline> polylines = this.model.getPolylines();
+		for (Polyline p: polylines) {
+			g.setLineWidth(p.getLineThickness());
+			g.setStroke(p.getColor());
+			
+			Point start = p.getstart();
+			Point end = p.getend();
+			g.strokeLine(start.getX(), start.getY(), end.getX(), end.getY());
+
 		}
 	}
 
@@ -259,6 +271,13 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 			
 			this.model.addRectangle(this.rectangle);
 		}
+		
+		else if (this.mode == "Polyline") {
+			Point endpoint = new Point((int)e.getX(), (int) e.getY());
+			this.polyline.setend(endpoint);
+			
+			this.model.addPolyline(this.polyline);
+		}
 	}
 
 	private void mouseClicked(MouseEvent e) {
@@ -285,6 +304,14 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 			this.rectangle = new Rectangle(vertex, vertex);	
 			
 			setDefaultModifiers(this.rectangle);			
+		}
+		
+		else if(this.mode == "Polyline") {
+			Point start = new Point((int) e.getX(), (int)e.getY());
+			Point end = new Point((int) e.getX(), (int)e.getY());
+			this.polyline = new Polyline(start,end);
+			
+			setDefaultModifiers(this.polyline);
 		}
 	}
 
@@ -316,6 +343,14 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 			
 			this.model.addRectangle(this.rectangle);
 			this.rectangle = null;
+		}
+		
+		else if (this.mode == "Polyline") {
+			Point end = new Point((int) e.getX(), (int)e.getY());
+			this.polyline.setend(end);
+			
+			this.model.addPolyline(this.polyline);
+			this.polyline = null;
 		}
 	}
 
