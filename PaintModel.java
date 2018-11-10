@@ -8,12 +8,9 @@ public class PaintModel extends Observable {
 	private ArrayList<Point> points = new ArrayList<Point>();
 	private ArrayList<Circle> circles = new ArrayList<Circle>();
 	private ArrayList<Rectangle>rectangles = new ArrayList<Rectangle>();// Alana edit
-<<<<<<< HEAD
 	private ArrayList<Squiggle>squiggles = new ArrayList<Squiggle>();
-=======
 	private ArrayList<Polyline> polylines = new ArrayList<Polyline>();
-	
->>>>>>> UserStory10
+
 
 	public void addPoint(Point p) {
 		this.points.add(p);
@@ -47,7 +44,7 @@ public class PaintModel extends Observable {
 		return rectangles;
 	}
 	
-<<<<<<< HEAD
+
 	public void addSquiggle(Squiggle s) {
 		this.squiggles.add(s);
 		this.setChanged();
@@ -58,7 +55,7 @@ public class PaintModel extends Observable {
 		return squiggles;
 	}
 	
-=======
+
 	public void addPolyline(Polyline p) {
 		this.polylines.add(p);
 		this.setChanged();
@@ -68,5 +65,5 @@ public class PaintModel extends Observable {
 	public ArrayList<Polyline> getPolylines(){
 		return polylines;
 	}
->>>>>>> UserStory10
+
 }
