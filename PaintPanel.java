@@ -6,7 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
+
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -18,7 +18,9 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 	private PaintModel model; // slight departure from MVC, because of the way painting works
 	private View view; // So we can talk to our parent or other components of the view
 
+
 	private ShapeMode mode; // modifies how we interpret input
+
 	
 	private boolean fill; // determines whether new shapes should be filled
 	private float lineThickness; // determines the line thickness of new shapes
@@ -60,21 +62,26 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 		g.setStroke(Color.BLACK);
 		g.setFill(Color.BLACK);
 
+
 		// Clear the canvas
 		g.clearRect(0, 0, this.getWidth(), this.getHeight());
 		g.strokeText("i=" + i, 50, 75);
 		i = i + 1;
-
-		// Draw Lines
-		ArrayList<Point> points = this.model.getPoints();
-		for (int i = 0; i < points.size() - 1; i++) {
-			Point p1 = points.get(i);
-			Point p2 = points.get(i + 1);
-			g.setStroke(p2.getColor());
-			g.setLineWidth(p2.getLineThickness());
-
-			g.strokeLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+		
+		
+		// Draw Squiggles
+		ArrayList<Squiggle> squiggles = this.model.getSquiggles();
+		for (Squiggle s: squiggles) {
+			for (int i=0; i < s.size()-1; i++) {
+				Point p1 = s.getPoint(i);
+				Point p2 = s.getPoint(i+1);
+				g.setStroke(s.getColor());
+				g.setLineWidth(s.getLineThickness());
+				g.strokeLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+			}
+				
 		}
+		
 
 		// Draw Circles
 		ArrayList<Circle> circles = this.model.getCircles();
@@ -98,9 +105,11 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 		//Draw Rectangles
 		ArrayList<Rectangle> rectangles = this.model.getRectangles();
 		for (Rectangle r: rectangles) {
+
 			g.setLineWidth(r.getLineThickness());
 			g.setFill(r.getColor());
 			g.setStroke(r.getColor());
+
 
 			Point topLeft = r.getTopLeft();
 			if (r.getFilled()) {
@@ -112,6 +121,8 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 			}
 		}
 	}
+			
+	
 
 	@Override
 	public void update(Observable o, Object arg) {
@@ -165,5 +176,6 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 	@Override
 	public void handle(MouseEvent event) {
 		this.mode.handleMouseEvent(event);
+
 	}
 }

@@ -1,7 +1,6 @@
 package ca.utoronto.utm.paint;
 
-//A point shouldn't really be a shape but we'll have to do this until we create a Squiggle class for Bug 5.
-public class Point extends Shape {
+public class Point{
 	int x, y;
 
 	Point(int x, int y) {

@@ -1,7 +1,5 @@
 package ca.utoronto.utm.paint;
 
-import javafx.scene.paint.Paint;
-
 public class Rectangle extends Shape {
 	
 	private Point vertex;
