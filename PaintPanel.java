@@ -67,75 +67,74 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 		g.strokeText("i=" + i, 50, 75);
 		i = i + 1;
 		
-		
-		// Draw Squiggles
-		ArrayList<Squiggle> squiggles = this.model.getSquiggles();
-		for (Squiggle s: squiggles) {
-			for (int i=0; i < s.size()-1; i++) {
-				Point p1 = s.getPoint(i);
-				Point p2 = s.getPoint(i+1);
-				g.setStroke(s.getColor());
-				g.setLineWidth(s.getLineThickness());
-				g.strokeLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
-			}
-				
-		}
-		
+		this.model.drawShapes();
 
-		// Draw Circles
-		ArrayList<Circle> circles = this.model.getCircles();
-		for (Circle c : circles) {
-			int x = c.getCentre().getX();
-			int y = c.getCentre().getY();
-			int radius = c.getRadius();
-		
-			g.setLineWidth(c.getLineThickness());
-			g.setStroke(c.getColor());
-			g.setFill(c.getColor());
-
-			if (c.getFilled()) {
-				g.fillOval((x - (radius/2)),(y - (radius/2)), radius, radius);		
-			}
-			else {
-				g.strokeOval((x - (radius/2)),(y - (radius/2)), radius, radius);
-			}
-		}
-		
-		//Draw Rectangles
-		ArrayList<Rectangle> rectangles = this.model.getRectangles();
-		for (Rectangle r: rectangles) {
-
-			g.setLineWidth(r.getLineThickness());
-			g.setFill(r.getColor());
-			g.setStroke(r.getColor());
-
-
-			Point topLeft = r.getTopLeft();
-			if (r.getFilled()) {
-				g.fillRect(topLeft.getX(), topLeft.getY(), r.getWidth(), r.getHeight());
-			}
-	
-			else {
-				g.strokeRect(topLeft.getX(), topLeft.getY(), r.getWidth(), r.getHeight());
-			}
-		}
-		
-		
-		//Draw Polylines
-		ArrayList<Polyline> polylines = this.model.getPolylines();
-		for (Polyline p: polylines) {
-			g.setLineWidth(p.getLineThickness());
-			g.setStroke(p.getColor());
-			
-			Point start = p.getstart();
-			Point end = p.getend();
-			g.strokeLine(start.getX(), start.getY(), end.getX(), end.getY());
-
-		}
+//		// Draw Squiggles
+//		ArrayList<Squiggle> squiggles = this.model.getSquiggles();
+//		for (Squiggle s: squiggles) {
+//			for (int i=0; i < s.size()-1; i++) {
+//				Point p1 = s.getPoint(i);
+//				Point p2 = s.getPoint(i+1);
+//				g.setStroke(s.getColor());
+//				g.setLineWidth(s.getLineThickness());
+//				g.strokeLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+//			}
+//				
+//		}
+//		
+//
+//		// Draw Circles
+//		ArrayList<Circle> circles = this.model.getCircles();
+//		for (Circle c : circles) {
+//			int x = c.getCentre().getX();
+//			int y = c.getCentre().getY();
+//			int radius = c.getRadius();
+//		
+//			g.setLineWidth(c.getLineThickness());
+//			g.setStroke(c.getColor());
+//			g.setFill(c.getColor());
+//
+//			if (c.getFilled()) {
+//				g.fillOval((x - (radius/2)),(y - (radius/2)), radius, radius);		
+//			}
+//			else {
+//				g.strokeOval((x - (radius/2)),(y - (radius/2)), radius, radius);
+//			}
+//		}
+//		
+//		//Draw Rectangles
+//		ArrayList<Rectangle> rectangles = this.model.getRectangles();
+//		for (Rectangle r: rectangles) {
+//
+//			g.setLineWidth(r.getLineThickness());
+//			g.setFill(r.getColor());
+//			g.setStroke(r.getColor());
+//
+//
+//			Point topLeft = r.getTopLeft();
+//			if (r.getFilled()) {
+//				g.fillRect(topLeft.getX(), topLeft.getY(), r.getWidth(), r.getHeight());
+//			}
+//	
+//			else {
+//				g.strokeRect(topLeft.getX(), topLeft.getY(), r.getWidth(), r.getHeight());
+//			}
+//		}
+//		
+//		
+//		//Draw Polylines
+//		ArrayList<Polyline> polylines = this.model.getPolylines();
+//		for (Polyline p: polylines) {
+//			g.setLineWidth(p.getLineThickness());
+//			g.setStroke(p.getColor());
+//			
+//			Point start = p.getstart();
+//			Point end = p.getend();
+//			g.strokeLine(start.getX(), start.getY(), end.getX(), end.getY());
+//
+//		}
 	}
 			
-	
-
 	@Override
 	public void update(Observable o, Object arg) {
 		// Not exactly how MVC works, but similar.
@@ -188,9 +187,5 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 	@Override
 	public void handle(MouseEvent event) {
 		this.mode.handleMouseEvent(event);
-
-
-
-	
 	}
 }

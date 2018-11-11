@@ -11,6 +11,7 @@ public class PaintModel extends Observable {
 	private ArrayList<Squiggle>squiggles = new ArrayList<Squiggle>();
 	private ArrayList<Polyline> polylines = new ArrayList<Polyline>();
 
+	private ArrayList<DrawingCommand> drawingCommands = new ArrayList<DrawingCommand>();
 
 	public void addPoint(Point p) {
 		this.points.add(p);
@@ -44,7 +45,6 @@ public class PaintModel extends Observable {
 		return rectangles;
 	}
 	
-
 	public void addSquiggle(Squiggle s) {
 		this.squiggles.add(s);
 		this.setChanged();
@@ -66,4 +66,13 @@ public class PaintModel extends Observable {
 		return polylines;
 	}
 
+	public void addCommand(DrawingCommand command) {
+		this.drawingCommands.add(command);
+	}
+	
+	public void drawShapes() {
+		for (DrawingCommand command: this.drawingCommands) {
+			command.execute();
+		}
+	}
 }
