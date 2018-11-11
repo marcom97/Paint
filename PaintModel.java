@@ -8,6 +8,7 @@ public class PaintModel extends Observable {
 	private ArrayList<Point> points = new ArrayList<Point>();
 	private ArrayList<Circle> circles = new ArrayList<Circle>();
 	private ArrayList<Rectangle>rectangles = new ArrayList<Rectangle>();// Alana edit
+	private ArrayList<DrawingCommand> drawingCommands = new ArrayList<DrawingCommand>();
 
 	public void addPoint(Point p) {
 		this.points.add(p);
@@ -38,5 +39,15 @@ public class PaintModel extends Observable {
 	
 	public ArrayList<Rectangle> getRectangles(){
 		return rectangles;
+	}
+	
+	public void addCommand(DrawingCommand command) {
+		this.drawingCommands.add(command);
+	}
+	
+	public void drawShapes() {
+		for (DrawingCommand command: this.drawingCommands) {
+			command.execute();
+		}
 	}
 }

@@ -65,52 +65,53 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 		g.strokeText("i=" + i, 50, 75);
 		i = i + 1;
 
-		// Draw Lines
-		ArrayList<Point> points = this.model.getPoints();
-		for (int i = 0; i < points.size() - 1; i++) {
-			Point p1 = points.get(i);
-			Point p2 = points.get(i + 1);
-			g.setStroke(p2.getColor());
-			g.setLineWidth(p2.getLineThickness());
-
-			g.strokeLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
-		}
-
-		// Draw Circles
-		ArrayList<Circle> circles = this.model.getCircles();
-		for (Circle c : circles) {
-			int x = c.getCentre().getX();
-			int y = c.getCentre().getY();
-			int radius = c.getRadius();
-		
-			g.setLineWidth(c.getLineThickness());
-			g.setStroke(c.getColor());
-			g.setFill(c.getColor());
-
-			if (c.getFilled()) {
-				g.fillOval((x - (radius/2)),(y - (radius/2)), radius, radius);		
-			}
-			else {
-				g.strokeOval((x - (radius/2)),(y - (radius/2)), radius, radius);
-			}
-		}
-		
-		//Draw Rectangles
-		ArrayList<Rectangle> rectangles = this.model.getRectangles();
-		for (Rectangle r: rectangles) {
-			g.setLineWidth(r.getLineThickness());
-			g.setFill(r.getColor());
-			g.setStroke(r.getColor());
-
-			Point topLeft = r.getTopLeft();
-			if (r.getFilled()) {
-				g.fillRect(topLeft.getX(), topLeft.getY(), r.getWidth(), r.getHeight());
-			}
-	
-			else {
-				g.strokeRect(topLeft.getX(), topLeft.getY(), r.getWidth(), r.getHeight());
-			}
-		}
+		this.model.drawShapes();
+//		// Draw Lines
+//		ArrayList<Point> points = this.model.getPoints();
+//		for (int i = 0; i < points.size() - 1; i++) {
+//			Point p1 = points.get(i);
+//			Point p2 = points.get(i + 1);
+//			g.setStroke(p2.getColor());
+//			g.setLineWidth(p2.getLineThickness());
+//
+//			g.strokeLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+//		}
+//
+//		// Draw Circles
+//		ArrayList<Circle> circles = this.model.getCircles();
+//		for (Circle c : circles) {
+//			int x = c.getCentre().getX();
+//			int y = c.getCentre().getY();
+//			int radius = c.getRadius();
+//		
+//			g.setLineWidth(c.getLineThickness());
+//			g.setStroke(c.getColor());
+//			g.setFill(c.getColor());
+//
+//			if (c.getFilled()) {
+//				g.fillOval((x - (radius/2)),(y - (radius/2)), radius, radius);		
+//			}
+//			else {
+//				g.strokeOval((x - (radius/2)),(y - (radius/2)), radius, radius);
+//			}
+//		}
+//		
+//		//Draw Rectangles
+//		ArrayList<Rectangle> rectangles = this.model.getRectangles();
+//		for (Rectangle r: rectangles) {
+//			g.setLineWidth(r.getLineThickness());
+//			g.setFill(r.getColor());
+//			g.setStroke(r.getColor());
+//
+//			Point topLeft = r.getTopLeft();
+//			if (r.getFilled()) {
+//				g.fillRect(topLeft.getX(), topLeft.getY(), r.getWidth(), r.getHeight());
+//			}
+//	
+//			else {
+//				g.strokeRect(topLeft.getX(), topLeft.getY(), r.getWidth(), r.getHeight());
+//			}
+//		}
 	}
 
 	@Override
