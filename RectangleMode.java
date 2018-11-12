@@ -10,7 +10,7 @@ public class RectangleMode extends ShapeMode {
 		Point vertex = new Point((int) e.getX(), (int) e.getY());
 		this.rectangle.setOppositeVertex(vertex);
 		
-		this.getModel().addRectangle(this.rectangle);
+		this.getPaintPanel().repaint();
 	}
 
 	@Override
@@ -18,7 +18,8 @@ public class RectangleMode extends ShapeMode {
 		Point vertex = new Point((int) e.getX(), (int)e.getY());
 		this.rectangle = new Rectangle(vertex, vertex);	
 		
-		setDefaultModifiers(this.rectangle);	
+		setDefaultModifiers(this.rectangle);
+		this.getModel().addCommand(this.rectangle);
 	}
 
 	@Override
@@ -38,7 +39,7 @@ public class RectangleMode extends ShapeMode {
 		Point vertex = new Point((int)e.getX(), (int)e.getY());
 		this.rectangle.setOppositeVertex(vertex);
 		
-		this.getModel().addRectangle(this.rectangle);
+		this.getPaintPanel().repaint();
 		this.rectangle = null;
 	}
 

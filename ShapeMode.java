@@ -45,9 +45,9 @@ public abstract class ShapeMode {
 	 * @param s shape to set modifiers for
 	 */
 	protected final void setDefaultModifiers(Shape s) {
-		s.setFilled(this.paintPanel.getFill());
-		s.setLineThickness(this.paintPanel.getLineThickness());
-		s.setColor(this.paintPanel.getColor());
+		s.setFilled(this.model.getFill());
+		s.setLineThickness(this.model.getLineThickness());
+		s.setColor(this.model.getColor());
 	}
 	
 	protected abstract void mouseDragged(MouseEvent e);

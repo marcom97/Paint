@@ -3,7 +3,7 @@ package ca.utoronto.utm.paint;
 import javafx.scene.input.MouseEvent;
 
 public class SquareMode extends ShapeMode {
-	private Rectangle rectangle;
+	private Rectangle square;
 	
 	/**
 	 * Return the vertex obtained by adjusting the specified point so that 
@@ -12,7 +12,7 @@ public class SquareMode extends ShapeMode {
 	 * @return the square's vertex obtained from p
 	 */
 	private Point getSquareVertex(Point p) {
-		Point v = this.rectangle.getVertex();
+		Point v = this.square.getVertex();
 		
 		int xDiff = p.getX() - v.getX();
 		int yDiff = p.getY() - v.getY();
@@ -34,17 +34,18 @@ public class SquareMode extends ShapeMode {
 	@Override
 	protected void mouseDragged(MouseEvent e) {
 		Point vertex1 = new Point((int) e.getX(), (int) e.getY());
-		this.rectangle.setOppositeVertex(this.getSquareVertex(vertex1));
+		this.square.setOppositeVertex(this.getSquareVertex(vertex1));
 				
-		this.getModel().addRectangle(this.rectangle);
+		this.getPaintPanel().repaint();
 	}
 
 	@Override
 	protected void mousePressed(MouseEvent e) {
 		Point vertex = new Point((int) e.getX(), (int)e.getY());
-		this.rectangle = new Rectangle(vertex, vertex);	
+		this.square = new Rectangle(vertex, vertex);	
 		
-		setDefaultModifiers(this.rectangle);	
+		setDefaultModifiers(this.square);
+		this.getModel().addCommand(this.square);
 	}
 
 	@Override
@@ -62,10 +63,10 @@ public class SquareMode extends ShapeMode {
 	@Override
 	protected void mouseReleased(MouseEvent e) {
 		Point p = new Point((int)e.getX(), (int)e.getY());
-		this.rectangle.setOppositeVertex(getSquareVertex(p));
+		this.square.setOppositeVertex(getSquareVertex(p));
 		
-		this.getModel().addRectangle(this.rectangle);
-		this.rectangle = null;
+		this.getPaintPanel().repaint();
+		this.square = null;
 	}
 
 	@Override

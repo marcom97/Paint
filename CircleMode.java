@@ -13,7 +13,7 @@ public class CircleMode extends ShapeMode {
 		int radius = (int)Math.hypot(xDiff, yDiff);
 		this.circle.setRadius(radius);
 		
-		this.getModel().addCircle(this.circle);
+		this.getPaintPanel().repaint();
 	}
 
 	@Override
@@ -22,6 +22,7 @@ public class CircleMode extends ShapeMode {
 		this.circle = new Circle(centre, 0);
 						
 		setDefaultModifiers(this.circle);
+		this.getModel().addCommand(this.circle);
 	}
 
 	@Override
@@ -44,7 +45,7 @@ public class CircleMode extends ShapeMode {
 		int radius = (int)Math.hypot(xDiff, yDiff);
 		this.circle.setRadius(radius);
 
-		this.getModel().addCircle(this.circle);
+		this.getPaintPanel().repaint();
 		this.circle = null;
 	}
 

@@ -3,76 +3,62 @@ package ca.utoronto.utm.paint;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+
 public class PaintModel extends Observable {
 
-	private ArrayList<Point> points = new ArrayList<Point>();
-	private ArrayList<Circle> circles = new ArrayList<Circle>();
-	private ArrayList<Rectangle>rectangles = new ArrayList<Rectangle>();// Alana edit
-	private ArrayList<Squiggle>squiggles = new ArrayList<Squiggle>();
-	private ArrayList<Polyline> polylines = new ArrayList<Polyline>();
-
 	private ArrayList<DrawingCommand> drawingCommands = new ArrayList<DrawingCommand>();
-
-	public void addPoint(Point p) {
-		this.points.add(p);
-		this.setChanged();
-		this.notifyObservers();
-	}
-
-	public ArrayList<Point> getPoints() {
-		return points;
-	}
-
-	public void addCircle(Circle c) {
-		this.circles.add(c);
-		this.setChanged();
-		this.notifyObservers();
-	}
-
-	public ArrayList<Circle> getCircles() {
-		return circles;
-	}
 	
-	
-	
-	public void addRectangle(Rectangle r) {
-		this.rectangles.add(r);
-		this.setChanged();
-		this.notifyObservers();
-	}
-	
-	public ArrayList<Rectangle> getRectangles(){
-		return rectangles;
-	}
-	
-	public void addSquiggle(Squiggle s) {
-		this.squiggles.add(s);
-		this.setChanged();
-		this.notifyObservers();
-	}
-
-	public ArrayList<Squiggle> getSquiggles() {
-		return squiggles;
-	}
-	
-
-	public void addPolyline(Polyline p) {
-		this.polylines.add(p);
-		this.setChanged();
-		this.notifyObservers();
-	}
-	
-	public ArrayList<Polyline> getPolylines(){
-		return polylines;
-	}
+	private boolean fill = true; // determines whether new shapes should be filled
+	private float lineThickness = 1; // determines the line thickness of new shapes
+	private Color color = Color.BLACK; // determines if new shapes should be colored or not.
 
 	public void addCommand(DrawingCommand command) {
 		this.drawingCommands.add(command);
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
-	public void drawShapes() {
+	public void drawShapes(GraphicsContext g) {
 		for (DrawingCommand command: this.drawingCommands) {
-			command.execute();
+			command.execute(g);
 		}
+	}
+	
+	public Color getColor() {
+		return this.color;
+	}
+	
+	/**
+	 * Set the color for each new shape
+	 * @param color color of the new shapes
+	 */
+	public void setColor(Color color) {
+		this.color = color;
+	}
+	
+	public boolean getFill() {
+		return this.fill;
+	}
+	
+	/**
+	 * Set whether new shapes should be filled
+	 * @param fill should new shapes be filled
+	 */
+	public void setFill(boolean fill) {
+		this.fill = fill;
+	}
+	
+	public float getLineThickness() {
+		return this.lineThickness;
+	}
+	
+	/**
+	 * Set the line thickness for new shapes
+	 * @param thickness line thickness for new shapes
+	 */
+	public void setLineThickness(float thickness) {
+		this.lineThickness = thickness;
 	}
 }

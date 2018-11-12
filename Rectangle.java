@@ -1,5 +1,8 @@
 package ca.utoronto.utm.paint;
 
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Paint;
+
 public class Rectangle extends Shape {
 	
 	private Point vertex;
@@ -11,6 +14,8 @@ public class Rectangle extends Shape {
 	public Rectangle(Point vertex, Point oppositeVertex) {
 		this.vertex = vertex;
 		this.oppositeVertex = oppositeVertex;
+		
+		vertexChanged();
 	}
 	
 		public Point getVertex() {
@@ -53,5 +58,20 @@ public class Rectangle extends Shape {
 
 	public int getHeight() {
 		return this.height;
+	}
+
+	@Override
+	public void execute(GraphicsContext g) {
+		g.setLineWidth(this.getLineThickness());
+		g.setFill(this.getColor());
+		g.setStroke(this.getColor());
+
+		if (this.getFilled()) {
+			g.fillRect(topLeft.getX(), topLeft.getY(), width, height);
+		}
+
+		else {
+			g.strokeRect(topLeft.getX(), topLeft.getY(), width, height);
+		}
 	}
 }

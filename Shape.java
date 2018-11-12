@@ -8,7 +8,7 @@ import javafx.scene.paint.Color;
  * @author Malaika Zaidi
  *
  */
-public abstract class Shape {
+public abstract class Shape implements DrawingCommand{
 	private boolean filled;
 	private float lineThickness;
 	private Color color;

@@ -9,16 +9,17 @@ public class SquiggleMode extends ShapeMode {
 	protected void mouseDragged(MouseEvent e) {
 		Point p = new Point((int) e.getX(), (int) e.getY());
 		this.squiggle.addPoint(p);
-		this.getModel().addSquiggle(this.squiggle);
+		
+		this.getPaintPanel().repaint();
 	}
 
 	@Override
 	protected void mousePressed(MouseEvent e) {
-
-		Point p1 = new Point((int) e.getX(), (int) e.getY());
-		this.squiggle = new Squiggle();
-		this.squiggle.addPoint(p1);
+		Point p = new Point((int) e.getX(), (int) e.getY());
+		this.squiggle = new Squiggle(p);
 		setDefaultModifiers(this.squiggle);
+		
+		this.getModel().addCommand(this.squiggle);
 	}
 
 	@Override
@@ -35,10 +36,10 @@ public class SquiggleMode extends ShapeMode {
 
 	@Override
 	protected void mouseReleased(MouseEvent e) {
-		
 		Point p1 = new Point((int) e.getX(), (int)e.getY());
 		this.squiggle.addPoint(p1);
-		this.getModel().addSquiggle(this.squiggle);
+		
+		this.getPaintPanel().repaint();
 		this.squiggle = null;
 	}
 

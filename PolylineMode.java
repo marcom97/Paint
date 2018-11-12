@@ -4,12 +4,13 @@ import javafx.scene.input.MouseEvent;
 
 public class PolylineMode extends ShapeMode {
 	private Polyline polyline;
+	
 	@Override
 	protected void mouseDragged(MouseEvent e) {
 		Point endpoint = new Point((int)e.getX(), (int) e.getY());
 		this.polyline.setend(endpoint);
 		
-		this.getModel().addPolyline(this.polyline);
+		this.getPaintPanel().repaint();
 	}
 
 	@Override
@@ -19,7 +20,7 @@ public class PolylineMode extends ShapeMode {
 		this.polyline = new Polyline(start,end);
 		
 		setDefaultModifiers(this.polyline);
-
+		this.getModel().addCommand(this.polyline);
 	}
 
 	@Override
@@ -39,9 +40,8 @@ public class PolylineMode extends ShapeMode {
 		Point end = new Point((int) e.getX(), (int)e.getY());
 		this.polyline.setend(end);
 		
-		this.getModel().addPolyline(this.polyline);
+		this.getPaintPanel().repaint();
 		this.polyline = null;
-
 	}
 
 	@Override
