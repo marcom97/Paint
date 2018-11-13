@@ -17,6 +17,7 @@ public class ColourSelectorPanel extends GridPane implements EventHandler<Action
 				,"teal", "steelblue","crimson"};
 		int row = 0;
 		int row2 = 0;
+
 		for (String label : buttonLabels) {
 			Button button = new Button(label);
 			button.setStyle("-fx-background-color:" + label);
