@@ -1,13 +1,18 @@
 package ca.utoronto.utm.paint;
 
 
+
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.layout.GridPane;
+ 
+import javafx.scene.layout.FlowPane;
+ 
 import javafx.scene.paint.Color;
 
-public class ColourSelectorPanel extends GridPane implements EventHandler<ActionEvent> {
+public class ColourSelectorPanel extends FlowPane implements EventHandler<ActionEvent> {
 
 	private View view; // So we can talk to our parent or other components of the view
 	public ColourSelectorPanel(View view) {
@@ -15,24 +20,21 @@ public class ColourSelectorPanel extends GridPane implements EventHandler<Action
 		String[] buttonLabels = {"black", "darkgrey", "maroon", "olive" , "darkgreen", "Green", "darkblue", "darkmagenta", "darkolivegreen", "aliceblue", "Aqua",
 				"beige", "brown", "lightgrey","white", "red","yellow","greenyellow", "lightblue", "blue", "pink", "gold", "violet", "orange", "darksalmon"
 				,"teal", "steelblue","crimson"};
-		int row = 0;
-		int row2 = 0;
-
+	
+		
 		for (String label : buttonLabels) {
 			Button button = new Button(label);
 			button.setStyle("-fx-background-color:" + label);
 			button.setOnAction(this);
 			button.setTextFill(null);
 			button.setPrefWidth(3);
+		
+			this.setPadding(new Insets(0,0,0,150));
+			this.getChildren().add(button);
+			this.setHgap(2);
+			this.setVgap(2);
+		
 			
-			if (row <= 13){
-				this.add(button, row, 0);
-				row++;
-			}
-			else {
-				this.add(button, row2, 1);
-				row2++;
-			}
 			
 		}
 		
