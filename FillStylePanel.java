@@ -2,7 +2,8 @@ package ca.utoronto.utm.paint;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 
 public class FillStylePanel extends GridPane implements EventHandler<ActionEvent> {
@@ -11,11 +12,15 @@ public class FillStylePanel extends GridPane implements EventHandler<ActionEvent
 	public FillStylePanel(View view) {
 		this.view = view;
 		
-		Button solidButton = new Button("Solid");
+		final ToggleGroup group = new ToggleGroup();
+		RadioButton solidButton = new RadioButton("Solid");
+		solidButton.setToggleGroup(group);
+		solidButton.setSelected(true);
 		solidButton.setOnAction(this);
 		solidButton.setMinWidth(100);
 		
-		Button outlineButton = new Button("Outline");
+		RadioButton outlineButton = new RadioButton("Outline");
+		outlineButton.setToggleGroup(group);
 		outlineButton.setOnAction(this);
 		outlineButton.setMinWidth(100);
 		
@@ -25,7 +30,7 @@ public class FillStylePanel extends GridPane implements EventHandler<ActionEvent
 
 	@Override
 	public void handle(ActionEvent event) {
-		Button button = (Button) event.getSource();
+		RadioButton button = (RadioButton) event.getSource();
 		view.getPaintPanel().setFill(button.getText() == "Solid");
 		System.out.println(button.getText());
 	}
