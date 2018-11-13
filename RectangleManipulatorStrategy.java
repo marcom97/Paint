@@ -2,7 +2,7 @@ package ca.utoronto.utm.paint;
 
 import javafx.scene.input.MouseEvent;
 
-public class RectangleMode extends ShapeMode {
+public class RectangleManipulatorStrategy extends ShapeManipulatorStrategy {
 	private Rectangle rectangle;
 
 	@Override

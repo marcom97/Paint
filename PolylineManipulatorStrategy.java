@@ -2,7 +2,7 @@ package ca.utoronto.utm.paint;
 
 import javafx.scene.input.MouseEvent;
 
-public class PolylineMode extends ShapeMode {
+public class PolylineManipulatorStrategy extends ShapeManipulatorStrategy {
 	private Polyline polyline;
 	
 	@Override

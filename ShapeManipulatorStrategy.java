@@ -2,7 +2,7 @@ package ca.utoronto.utm.paint;
 
 import javafx.scene.input.MouseEvent;
 
-public abstract class ShapeMode {
+public abstract class ShapeManipulatorStrategy {
 	private PaintPanel paintPanel;
 	private PaintModel model;
 	

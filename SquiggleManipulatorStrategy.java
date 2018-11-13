@@ -2,7 +2,7 @@ package ca.utoronto.utm.paint;
 
 import javafx.scene.input.MouseEvent;
 
-public class SquiggleMode extends ShapeMode {
+public class SquiggleManipulatorStrategy extends ShapeManipulatorStrategy {
 	private Squiggle squiggle;
 
 	@Override

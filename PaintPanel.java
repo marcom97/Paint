@@ -17,7 +17,7 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 	private PaintModel model; // slight departure from MVC, because of the way painting works
 	private View view; // So we can talk to our parent or other components of the view
 
-	private ShapeMode mode; // modifies how we interpret input
+	private ShapeManipulatorStrategy strategy; // modifies how we interpret input
 
 	private Canvas canvas;
 
@@ -34,10 +34,10 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 		this.model = model;
 		this.model.addObserver(this);
 		
-		ShapeModeCreator shapeModeCreator = ShapeModeCreator.getInstance();
-		shapeModeCreator.setPaintPanel(this);
-		shapeModeCreator.setModel(this.model);
-		this.mode = shapeModeCreator.createShapeMode("Circle");
+		ShapeManipulatorFactory shapeManipulatorFactory = ShapeManipulatorFactory.getInstance();
+		shapeManipulatorFactory.setPaintPanel(this);
+		shapeManipulatorFactory.setModel(this.model);
+		this.strategy = shapeManipulatorFactory.createShapeManipulator("Circle");
 
 		this.view = view;
 	}
@@ -66,8 +66,8 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 	/**
 	 * Controller aspect of this
 	 */
-	public void setMode(String mode) {
-		this.mode = ShapeModeCreator.getInstance().createShapeMode(mode);
+	public void setShapeStrategy(String strategy) {
+		this.strategy = ShapeManipulatorFactory.getInstance().createShapeManipulator(strategy);
 	}
 
 	/**
@@ -96,6 +96,6 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 	
 	@Override
 	public void handle(MouseEvent event) {
-		this.mode.handleMouseEvent(event);
+		this.strategy.handleMouseEvent(event);
 	}
 }

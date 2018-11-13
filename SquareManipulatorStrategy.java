@@ -2,7 +2,7 @@ package ca.utoronto.utm.paint;
 
 import javafx.scene.input.MouseEvent;
 
-public class SquareMode extends ShapeMode {
+public class SquareManipulatorStrategy extends ShapeManipulatorStrategy {
 	private Rectangle square;
 	
 	/**

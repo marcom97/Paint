@@ -28,7 +28,7 @@ public class ShapeChooserPanel extends GridPane implements EventHandler<ActionEv
 	@Override
 	public void handle(ActionEvent event) {
 		String command = ((Button) event.getSource()).getText();
-		this.view.getPaintPanel().setMode(command);
+		this.view.getPaintPanel().setShapeStrategy(command);
 		System.out.println(command);
 	}
 }
