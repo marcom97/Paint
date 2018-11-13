@@ -23,7 +23,9 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 
 	public PaintPanel(PaintModel model, View view) {
 
-		this.canvas = new Canvas(300, 300);
+		this.canvas = new Canvas(600, 600);
+		
+		
 		this.getChildren().add(this.canvas);
 		// The canvas is transparent, so the background color of the
 		// containing pane serves as the background color of the canvas.
