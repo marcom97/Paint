@@ -10,7 +10,7 @@ public class LineThicknessCommand implements DrawingCommand{
 	}
 	@Override
 	public void execute(GraphicsContext g) {
-		 
+		 g.setLineWidth(linethickness);
 		
 	}
 

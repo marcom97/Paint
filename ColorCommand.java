@@ -12,7 +12,6 @@ public class ColorCommand implements DrawingCommand{
 	@Override
 	public void execute(GraphicsContext g) {
 		g.setStroke(this.color);
-		g.setFill(this.color);
 	}
 
 }

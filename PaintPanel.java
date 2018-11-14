@@ -20,10 +20,8 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 	private ShapeManipulatorStrategy strategy; // modifies how we interpret input
 
 	private Canvas canvas;
-	private Color color;
 	private boolean fill;
-	private float linethickness;
-	private DrawingCommand colorcommand;
+
 
 	public PaintPanel(PaintModel model, View view) {
 
@@ -40,22 +38,16 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 		this.model = model;
 		this.model.addObserver(this);
 		this.fill = true;
-		this.linethickness = 1;
 		
 		ShapeManipulatorFactory shapeManipulatorFactory = ShapeManipulatorFactory.getInstance();
 		shapeManipulatorFactory.setPaintPanel(this);
 		shapeManipulatorFactory.setModel(this.model);
 		this.strategy = shapeManipulatorFactory.createShapeManipulator("Circle");
 		
-		ColorCommand colorcommand = new ColorCommand(this.color);
-		FillCommand fillcommand = new FillCommand(this.fill);
-		LineThicknessCommand linethicknesscommand = new LineThicknessCommand(linethickness);
 		
 
 		this.view = view;
-		this.model.addCommand(colorcommand);
-		this.model.addCommand(fillcommand);
-		this.model.addCommand(linethicknesscommand);
+	
 	
 	}
 
@@ -88,24 +80,23 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 	}
 	
 	public void setColor(Color color) {
-		this.color = color;
+		this.model.addCommand(new ColorCommand(color));
 		
 	}
-	
 	public void setFill(boolean fill) {
-		this.fill= fill;
-		
+		this.fill = fill;
 	}
 	
+	public void setLineThickness(float linethickness) {
+		this.model.addCommand(new LineThicknessCommand(linethickness));
+		
+	}
 	@Override
 	public void handle(MouseEvent event) {
 		this.strategy.handleMouseEvent(event);
 	}
 
-	public void setLineThickness(float linethickness) {
-		this.linethickness = linethickness;
-		
-	}
+	
 
 	
 }
