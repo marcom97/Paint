@@ -33,5 +33,10 @@ public class PaintModel extends Observable {
 		this.fill = fill;
 	}
 	
+	public boolean getFill() {
+		return this.fill;
+	}
+	
+	
 	
 }
