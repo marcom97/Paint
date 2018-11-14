@@ -46,7 +46,6 @@ public class ColourSelectorPanel extends FlowPane implements EventHandler<Action
 	public void handle(ActionEvent event) {
 		String command = "Selects Color" + " " +((Button) event.getSource()).getText();
 		Color color = Color.web(((Button) event.getSource()).getText());
-		this.view.getPaintPanel().setShapeStrategy(command);
 		this.view.getPaintPanel().setColor(color);
 		System.out.println(command);
 	}
