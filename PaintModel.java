@@ -25,5 +25,13 @@ public class PaintModel extends Observable {
 			command.execute(g);
 		}
 	}
+	/**
+	 * Set whether new shapes should be filled
+	 * @param fill should new shapes be filled
+	 */
+	public void setFill(boolean fill) {
+		this.fill = fill;
+	}
+	
 	
 }
