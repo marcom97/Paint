@@ -84,7 +84,7 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 		
 	}
 	public void setFill(boolean fill) {
-		this.fill = fill;
+		this.model.setFill(fill);
 	}
 	
 	public void setLineThickness(float linethickness) {
