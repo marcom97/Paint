@@ -29,7 +29,7 @@ public class ColourSelectorPanel extends FlowPane implements EventHandler<Action
 			button.setTextFill(null);
 			button.setPrefWidth(3);
 		
-			this.setPadding(new Insets(0,0,0,150));
+			
 			this.getChildren().add(button);
 			this.setHgap(2);
 			this.setVgap(2);
@@ -46,8 +46,8 @@ public class ColourSelectorPanel extends FlowPane implements EventHandler<Action
 	public void handle(ActionEvent event) {
 		String command = "Selects Color" + " " +((Button) event.getSource()).getText();
 		Color color = Color.web(((Button) event.getSource()).getText());
+		this.view.getPaintPanel().setShapeStrategy(command);
 		this.view.getPaintPanel().setColor(color);
-		
 		System.out.println(command);
 	}
 }

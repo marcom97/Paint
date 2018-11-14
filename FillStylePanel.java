@@ -34,6 +34,7 @@ public class FillStylePanel extends VBox implements EventHandler<ActionEvent> {
 	@Override
 	public void handle(ActionEvent event) {
 		RadioButton button = (RadioButton) event.getSource();
+		
 		view.getPaintPanel().setFill(button.getText() == "Solid");
 		System.out.println(button.getText());
 	}

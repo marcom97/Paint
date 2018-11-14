@@ -20,6 +20,10 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 	private ShapeManipulatorStrategy strategy; // modifies how we interpret input
 
 	private Canvas canvas;
+	private Color color;
+	private boolean fill;
+	private float linethickness;
+	private DrawingCommand colorcommand;
 
 	public PaintPanel(PaintModel model, View view) {
 
@@ -35,13 +39,24 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 
 		this.model = model;
 		this.model.addObserver(this);
+		this.fill = true;
+		this.linethickness = 1;
 		
 		ShapeManipulatorFactory shapeManipulatorFactory = ShapeManipulatorFactory.getInstance();
 		shapeManipulatorFactory.setPaintPanel(this);
 		shapeManipulatorFactory.setModel(this.model);
 		this.strategy = shapeManipulatorFactory.createShapeManipulator("Circle");
+		
+		ColorCommand colorcommand = new ColorCommand(this.color);
+		FillCommand fillcommand = new FillCommand(this.fill);
+		LineThicknessCommand linethicknesscommand = new LineThicknessCommand(linethickness);
+		
 
 		this.view = view;
+		this.model.addCommand(colorcommand);
+		this.model.addCommand(fillcommand);
+		this.model.addCommand(linethicknesscommand);
+	
 	}
 
 	public void repaint() {
@@ -71,33 +86,26 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 	public void setShapeStrategy(String strategy) {
 		this.strategy = ShapeManipulatorFactory.getInstance().createShapeManipulator(strategy);
 	}
-
-	/**
-	 * Set the color for each new shape
-	 * @param color color of the new shapes
-	 */
+	
 	public void setColor(Color color) {
-		this.model.setColor(color);
-	}
-
-	/**
-	 * Set whether new shapes should be filled
-	 * @param fill should new shapes be filled
-	 */
-	public void setFill(boolean fill) {
-		this.model.setFill(fill);
+		this.color = color;
+		
 	}
 	
-	/**
-	 * Set the line thickness for new shapes
-	 * @param thickness line thickness for new shapes
-	 */
-	public void setLineThickness(float thickness) {
-		this.model.setLineThickness(thickness);
+	public void setFill(boolean fill) {
+		this.fill= fill;
+		
 	}
 	
 	@Override
 	public void handle(MouseEvent event) {
 		this.strategy.handleMouseEvent(event);
 	}
+
+	public void setLineThickness(float linethickness) {
+		this.linethickness = linethickness;
+		
+	}
+
+	
 }
