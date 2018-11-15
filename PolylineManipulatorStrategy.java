@@ -21,16 +21,17 @@ public class PolylineManipulatorStrategy extends ShapeManipulatorStrategy {
 
 	@Override
 	protected void mouseClicked(MouseEvent e) {
-		
-	}
-
-	@Override
-	protected void mouseReleased(MouseEvent e) {
 		Point point = new Point((int) e.getX(), (int) e.getY());
 		this.polyline.addpoints(point);
 		setDefaultModifiers(this.polyline);
 		this.getModel().addCommand(this.polyline);
 		this.getPaintPanel().repaint();
+		
+	}
+
+	@Override
+	protected void mouseReleased(MouseEvent e) {
+		
 	}
 
 	@Override
