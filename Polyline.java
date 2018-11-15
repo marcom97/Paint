@@ -8,11 +8,11 @@ import javafx.scene.shape.StrokeLineCap;
 public class Polyline extends Shape {
 	private ArrayList<Point> lstpoint = new ArrayList<Point>();
 	
-	public Polyline(Point p) {
-		lstpoint.add(p);
+	public Polyline( ) {
+	 
 	}
 	
-	public void addpointps(Point p) {
+	public void addpoints(Point p) {
 		lstpoint.add(p);
 	}
 	
@@ -33,7 +33,7 @@ public class Polyline extends Shape {
 	public void execute(GraphicsContext g) {
 		g.setStroke(this.getColor());
 		g.setLineWidth(this.getLineThickness());
-		g.setLineCap(StrokeLineCap.SQUARE);
+		g.setLineCap(StrokeLineCap.ROUND);
 		
 		for (int i = 0; i < lstpoint.size() - 1; i++) {
 			Point p1 = lstpoint.get(i);
@@ -41,8 +41,8 @@ public class Polyline extends Shape {
 			
 			g.strokeLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
 		
-		g.setLineCap(StrokeLineCap.SQUARE);		
+		 		
 	}
-
+		g.setLineCap(StrokeLineCap.SQUARE);
 	}
 }

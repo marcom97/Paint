@@ -4,7 +4,8 @@ package ca.utoronto.utm.paint;
 import javafx.scene.input.MouseEvent;
 
 public class PolylineManipulatorStrategy extends ShapeManipulatorStrategy {
-	private Polyline polyline;
+	private Polyline polyline = new Polyline();
+	
 	
 	@Override
 	protected void mouseDragged(MouseEvent e) {
@@ -12,11 +13,6 @@ public class PolylineManipulatorStrategy extends ShapeManipulatorStrategy {
 
 	@Override
 	protected void mousePressed(MouseEvent e) {
-		Point start = new Point((int) e.getX(), (int) e.getY());
-		this.polyline = new Polyline(start);
-		setDefaultModifiers(this.polyline);
-		
-		this.getModel().addCommand(this.polyline);
 	}
 
 	@Override
@@ -25,17 +21,16 @@ public class PolylineManipulatorStrategy extends ShapeManipulatorStrategy {
 
 	@Override
 	protected void mouseClicked(MouseEvent e) {
-		Point mid = new Point((int) e.getX(), (int) e.getY());
-		this.polyline.addpointps(mid);
 		
 	}
 
 	@Override
 	protected void mouseReleased(MouseEvent e) {
-		Point end = new Point((int) e.getX(), (int) e.getY());
-		this.polyline.addpointps(end);
-		
+		Point point = new Point((int) e.getX(), (int) e.getY());
+		this.polyline.addpoints(point);
+		setDefaultModifiers(this.polyline);
 		this.getModel().addCommand(this.polyline);
+		this.getPaintPanel().repaint();
 	}
 
 	@Override
@@ -44,7 +39,7 @@ public class PolylineManipulatorStrategy extends ShapeManipulatorStrategy {
 
 	@Override
 	protected void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
+
 
 	}
 	
