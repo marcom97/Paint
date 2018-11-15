@@ -1,6 +1,6 @@
 package ca.utoronto.utm.paint;
 
-import ca.utoronto.utm.scribble.Pair;
+
 import javafx.scene.input.MouseEvent;
 
 public class PolylineMode extends ShapeMode {
