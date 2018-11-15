@@ -4,9 +4,7 @@ package ca.utoronto.utm.paint;
 import javafx.scene.input.MouseEvent;
 
 public class PolylineManipulatorStrategy extends ShapeManipulatorStrategy {
-	private Polyline polyline = new Polyline();
-	
-	
+	private Polyline polyline;
 	@Override
 	protected void mouseDragged(MouseEvent e) {
 	}
@@ -21,12 +19,17 @@ public class PolylineManipulatorStrategy extends ShapeManipulatorStrategy {
 
 	@Override
 	protected void mouseClicked(MouseEvent e) {
+		if (this.polyline == null) {
+			this.polyline = new Polyline();
+			setDefaultModifiers(this.polyline);
+			this.getModel().addCommand(this.polyline);
+			this.getPaintPanel().repaint();
+
+		}
 		Point point = new Point((int) e.getX(), (int) e.getY());
 		this.polyline.addpoints(point);
 		setDefaultModifiers(this.polyline);
-		this.getModel().addCommand(this.polyline);
 		this.getPaintPanel().repaint();
-		
 	}
 
 	@Override
