@@ -23,12 +23,11 @@ public class PolylineManipulatorStrategy extends ShapeManipulatorStrategy {
 			this.polyline = new Polyline();
 			setDefaultModifiers(this.polyline);
 			this.getModel().addCommand(this.polyline);
-			this.getPaintPanel().repaint();
+			
 
 		}
 		Point point = new Point((int) e.getX(), (int) e.getY());
-		this.polyline.addpoints(point);
-		setDefaultModifiers(this.polyline);
+		this.polyline.addPoint(point);
 		this.getPaintPanel().repaint();
 	}
 
