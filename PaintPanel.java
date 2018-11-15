@@ -17,13 +17,17 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 	private PaintModel model; // slight departure from MVC, because of the way painting works
 	private View view; // So we can talk to our parent or other components of the view
 
-	private ShapeMode mode; // modifies how we interpret input
+	private ShapeManipulatorStrategy strategy; // modifies how we interpret input
 
 	private Canvas canvas;
+	private boolean fill;
+
 
 	public PaintPanel(PaintModel model, View view) {
 
-		this.canvas = new Canvas(300, 300);
+		this.canvas = new Canvas(600, 600);
+		
+		
 		this.getChildren().add(this.canvas);
 		// The canvas is transparent, so the background color of the
 		// containing pane serves as the background color of the canvas.
@@ -33,13 +37,18 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 
 		this.model = model;
 		this.model.addObserver(this);
+		this.fill = true;
 		
-		ShapeModeCreator shapeModeCreator = ShapeModeCreator.getInstance();
-		shapeModeCreator.setPaintPanel(this);
-		shapeModeCreator.setModel(this.model);
-		this.mode = shapeModeCreator.createShapeMode("Circle");
+		ShapeManipulatorFactory shapeManipulatorFactory = ShapeManipulatorFactory.getInstance();
+		shapeManipulatorFactory.setPaintPanel(this);
+		shapeManipulatorFactory.setModel(this.model);
+		this.strategy = shapeManipulatorFactory.createShapeManipulator("Circle");
+		
+		
 
 		this.view = view;
+	
+	
 	}
 
 	public void repaint() {
@@ -66,36 +75,28 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 	/**
 	 * Controller aspect of this
 	 */
-	public void setMode(String mode) {
-		this.mode = ShapeModeCreator.getInstance().createShapeMode(mode);
+	public void setShapeStrategy(String strategy) {
+		this.strategy = ShapeManipulatorFactory.getInstance().createShapeManipulator(strategy);
 	}
-
-	/**
-	 * Set the color for each new shape
-	 * @param color color of the new shapes
-	 */
+	
 	public void setColor(Color color) {
-		this.model.setColor(color);
+		this.model.addCommand(new ColorCommand(color));
+		
 	}
-
-	/**
-	 * Set whether new shapes should be filled
-	 * @param fill should new shapes be filled
-	 */
 	public void setFill(boolean fill) {
 		this.model.setFill(fill);
 	}
 	
-	/**
-	 * Set the line thickness for new shapes
-	 * @param thickness line thickness for new shapes
-	 */
-	public void setLineThickness(float thickness) {
-		this.model.setLineThickness(thickness);
+	public void setLineThickness(float linethickness) {
+		this.model.addCommand(new LineThicknessCommand(linethickness));
+		
 	}
-	
 	@Override
 	public void handle(MouseEvent event) {
-		this.mode.handleMouseEvent(event);
+		this.strategy.handleMouseEvent(event);
 	}
+
+	
+
+	
 }

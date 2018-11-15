@@ -2,7 +2,7 @@ package ca.utoronto.utm.paint;
 
 import javafx.scene.input.MouseEvent;
 
-public class SquareMode extends ShapeMode {
+public class SquareManipulatorStrategy extends ShapeManipulatorStrategy {
 	private Rectangle square;
 	
 	/**
@@ -16,6 +16,11 @@ public class SquareMode extends ShapeMode {
 		
 		int xDiff = p.getX() - v.getX();
 		int yDiff = p.getY() - v.getY();
+		
+		if(xDiff == 0 || yDiff == 0) {
+			return v;
+		}
+		
 		int width = Math.abs(xDiff);
 		int height = Math.abs(yDiff);
 		

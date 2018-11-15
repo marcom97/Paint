@@ -39,7 +39,7 @@ public class View implements EventHandler<ActionEvent> {
 		this.paintPanel.setAlignment(Pos.TOP_LEFT);
 		
 		VBox toolsPanel = new VBox();
-		toolsPanel.setSpacing(10);
+		toolsPanel.setSpacing(15);
 		toolsPanel.getChildren().add(this.shapeChooserPanel);
 		toolsPanel.getChildren().add(this.fillStylePanel);
 		toolsPanel.getChildren().add(this.lineThicknessPanel);

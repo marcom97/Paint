@@ -2,7 +2,7 @@ package ca.utoronto.utm.paint;
 
 import javafx.scene.input.MouseEvent;
 
-public class CircleMode extends ShapeMode {
+public class CircleManipulatorStrategy extends ShapeManipulatorStrategy {
 	private Circle circle;
 
 	@Override
