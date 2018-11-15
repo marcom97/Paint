@@ -12,6 +12,11 @@ public class PolylineMode extends ShapeMode {
 
 	@Override
 	protected void mousePressed(MouseEvent e) {
+		Point start = new Point((int) e.getX(), (int) e.getY());
+		this.polyline = new Polyline(start);
+		setDefaultModifiers(this.polyline);
+		
+		this.getModel().addCommand(this.polyline);
 	}
 
 	@Override
@@ -20,10 +25,17 @@ public class PolylineMode extends ShapeMode {
 
 	@Override
 	protected void mouseClicked(MouseEvent e) {
+		Point mid = new Point((int) e.getX(), (int) e.getY());
+		this.polyline.addpointps(mid);
+		
 	}
 
 	@Override
 	protected void mouseReleased(MouseEvent e) {
+		Point end = new Point((int) e.getX(), (int) e.getY());
+		this.polyline.addpointps(end);
+		
+		this.getModel().addCommand(this.polyline);
 	}
 
 	@Override
