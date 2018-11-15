@@ -16,6 +16,11 @@ public class SquareManipulatorStrategy extends ShapeManipulatorStrategy {
 		
 		int xDiff = p.getX() - v.getX();
 		int yDiff = p.getY() - v.getY();
+		
+		if(xDiff == 0 || yDiff == 0) {
+			return v;
+		}
+		
 		int width = Math.abs(xDiff);
 		int height = Math.abs(yDiff);
 		

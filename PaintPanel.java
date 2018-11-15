@@ -20,10 +20,14 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 	private ShapeManipulatorStrategy strategy; // modifies how we interpret input
 
 	private Canvas canvas;
+	private boolean fill;
+
 
 	public PaintPanel(PaintModel model, View view) {
 
-		this.canvas = new Canvas(300, 300);
+		this.canvas = new Canvas(600, 600);
+		
+		
 		this.getChildren().add(this.canvas);
 		// The canvas is transparent, so the background color of the
 		// containing pane serves as the background color of the canvas.
@@ -33,13 +37,18 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 
 		this.model = model;
 		this.model.addObserver(this);
+		this.fill = true;
 		
 		ShapeManipulatorFactory shapeManipulatorFactory = ShapeManipulatorFactory.getInstance();
 		shapeManipulatorFactory.setPaintPanel(this);
 		shapeManipulatorFactory.setModel(this.model);
 		this.strategy = shapeManipulatorFactory.createShapeManipulator("Circle");
+		
+		
 
 		this.view = view;
+	
+	
 	}
 
 	public void repaint() {
@@ -69,33 +78,25 @@ class PaintPanel extends StackPane implements Observer, EventHandler<MouseEvent>
 	public void setShapeStrategy(String strategy) {
 		this.strategy = ShapeManipulatorFactory.getInstance().createShapeManipulator(strategy);
 	}
-
-	/**
-	 * Set the color for each new shape
-	 * @param color color of the new shapes
-	 */
+	
 	public void setColor(Color color) {
-		this.model.setColor(color);
+		this.model.addCommand(new ColorCommand(color));
+		
 	}
-
-	/**
-	 * Set whether new shapes should be filled
-	 * @param fill should new shapes be filled
-	 */
 	public void setFill(boolean fill) {
 		this.model.setFill(fill);
 	}
 	
-	/**
-	 * Set the line thickness for new shapes
-	 * @param thickness line thickness for new shapes
-	 */
-	public void setLineThickness(float thickness) {
-		this.model.setLineThickness(thickness);
+	public void setLineThickness(float linethickness) {
+		this.model.addCommand(new LineThicknessCommand(linethickness));
+		
 	}
-	
 	@Override
 	public void handle(MouseEvent event) {
 		this.strategy.handleMouseEvent(event);
 	}
+
+	
+
+	
 }

@@ -18,7 +18,6 @@ public class SquiggleManipulatorStrategy extends ShapeManipulatorStrategy {
 		Point p = new Point((int) e.getX(), (int) e.getY());
 		this.squiggle = new Squiggle(p);
 		setDefaultModifiers(this.squiggle);
-		
 		this.getModel().addCommand(this.squiggle);
 	}
 

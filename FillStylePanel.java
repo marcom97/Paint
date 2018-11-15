@@ -2,30 +2,39 @@ package ca.utoronto.utm.paint;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
+import javafx.geometry.Pos;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
-public class FillStylePanel extends GridPane implements EventHandler<ActionEvent> {
+public class FillStylePanel extends VBox implements EventHandler<ActionEvent> {
 	private View view;
 	
 	public FillStylePanel(View view) {
 		this.view = view;
+		this.setAlignment(Pos.TOP_CENTER);
 		
-		Button solidButton = new Button("Solid");
+		final ToggleGroup group = new ToggleGroup();
+		RadioButton solidButton = new RadioButton("Solid");
+		solidButton.setToggleGroup(group);
+		solidButton.setSelected(true);
 		solidButton.setOnAction(this);
-		solidButton.setMinWidth(100);
+		solidButton.setMaxWidth(90);
 		
-		Button outlineButton = new Button("Outline");
+		RadioButton outlineButton = new RadioButton("Outline");
+		outlineButton.setToggleGroup(group);
 		outlineButton.setOnAction(this);
-		outlineButton.setMinWidth(100);
+		outlineButton.setMaxWidth(90);
 		
-		this.add(solidButton, 0, 0);
-		this.add(outlineButton, 0, 1);
+		this.getChildren().add(solidButton);
+		this.getChildren().add(outlineButton);
 	}
 
 	@Override
 	public void handle(ActionEvent event) {
-		Button button = (Button) event.getSource();
+		RadioButton button = (RadioButton) event.getSource();
+		
 		view.getPaintPanel().setFill(button.getText() == "Solid");
 		System.out.println(button.getText());
 	}
