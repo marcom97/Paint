@@ -2,6 +2,7 @@ package ca.utoronto.utm.paint;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -16,6 +17,8 @@ public class ShapeChooserPanel extends GridPane implements EventHandler<ActionEv
 		this.view = view;
 
 		String[] buttonLabels = { "Circle", "Rectangle", "Square", "Squiggle", "Polyline" };
+		this.setPadding(new Insets(5,5,5,5));
+		this.setVgap(4);
 		
 		int row = 0;
 		for (String label : buttonLabels) {
@@ -24,6 +27,7 @@ public class ShapeChooserPanel extends GridPane implements EventHandler<ActionEv
 			this.add(button, 0, row);
 			row++;
 			button.setOnAction(this);
+			
 			
 			if (label == "Circle") {
 				javafx.scene.shape.Circle circle = new javafx.scene.shape.Circle();

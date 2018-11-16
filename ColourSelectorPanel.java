@@ -20,20 +20,24 @@ public class ColourSelectorPanel extends FlowPane implements EventHandler<Action
 		String[] buttonLabels = {"black", "darkgrey", "maroon", "olive" , "darkgreen", "Green", "darkblue", "darkmagenta", "darkolivegreen", "aliceblue", "Aqua",
 				"beige", "brown", "lightgrey","white", "red","yellow","greenyellow", "lightblue", "blue", "pink", "gold", "violet", "orange", "darksalmon"
 				,"teal", "steelblue","crimson"};
+		 
 	
 		
 		for (String label : buttonLabels) {
 			Button button = new Button(label);
-			button.setStyle("-fx-background-color:" + label);
+			String styles = "-fx-background-color:" + label +";"  + "-fx-border-color: black;" + "-fx-focus-color: dimgrey;";
+			button.setStyle(styles);
 			button.setOnAction(this);
 			button.setTextFill(null);
 			button.setPrefWidth(3);
+			
+			
 		
 			
 			this.getChildren().add(button);
-			this.setHgap(2);
-			this.setVgap(2);
-		
+			this.setHgap(5);
+			this.setVgap(6);
+			this.setPadding(new Insets(10,10,10,10));
 			
 			
 		}

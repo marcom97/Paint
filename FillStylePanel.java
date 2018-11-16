@@ -2,6 +2,7 @@ package ca.utoronto.utm.paint;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
@@ -29,6 +30,7 @@ public class FillStylePanel extends VBox implements EventHandler<ActionEvent> {
 		
 		this.getChildren().add(solidButton);
 		this.getChildren().add(outlineButton);
+		this.setPadding(new Insets(5,5,5,5));
 	}
 
 	@Override

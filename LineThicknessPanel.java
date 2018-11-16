@@ -1,5 +1,6 @@
 package ca.utoronto.utm.paint;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -14,7 +15,7 @@ public class LineThicknessPanel extends VBox {
 	public LineThicknessPanel(View view) {		
 		this.view = view;
 		this.setAlignment(Pos.TOP_CENTER);
-		
+		this.setPadding(new Insets(5,5,5,5));
 		Label title = new Label("Line Thickness: " + (int)defaultThickness);
 		title.setFont(Font.font("Arial", FontWeight.BOLD, 10));;
 		title.setMaxWidth(90);
