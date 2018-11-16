@@ -2,6 +2,10 @@ package ca.utoronto.utm.paint;
 
 import javafx.scene.input.MouseEvent;
 
+/**
+ * The strategy for creating circles to draw
+ *
+ */
 public class CircleManipulatorStrategy extends ShapeManipulatorStrategy {
 	private Circle circle;
 

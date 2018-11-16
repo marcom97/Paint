@@ -1,5 +1,10 @@
 package ca.utoronto.utm.paint;
 
+/**
+ * A factory that creates ShapeManipulatorStrategies to be used by PaintPanel
+ * @author Marco Matamoros
+ *
+ */
 public class ShapeManipulatorFactory {
 	private static ShapeManipulatorFactory instance = null;
 	private PaintPanel paintPanel;
@@ -16,6 +21,11 @@ public class ShapeManipulatorFactory {
 		return instance;
 	}
 	
+	/**
+	 * Returns a new ShapeManipulatorStrategy object from the given String id
+	 * @param strategy the String id of the ShapeManipulatorStrategy to create
+	 * @return the new ShapeManipulatorStrategy object
+	 */
 	public ShapeManipulatorStrategy createShapeManipulator(String strategy) {
 		ShapeManipulatorStrategy shapeManipulatorStrategy;
 		
