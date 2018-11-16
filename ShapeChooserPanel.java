@@ -3,6 +3,7 @@ package ca.utoronto.utm.paint;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
@@ -31,7 +32,7 @@ public class ShapeChooserPanel extends GridPane implements EventHandler<ActionEv
 				circle.setFill(Color.WHITE);
 				circle.setStroke(Color.BLACK);
 				button.setGraphic(circle);
-				button.setText(null);
+				button.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
 			}
 			else if (label == "Rectangle"){
 				javafx.scene.shape.Rectangle rectangle = new javafx.scene.shape.Rectangle();
@@ -40,7 +41,8 @@ public class ShapeChooserPanel extends GridPane implements EventHandler<ActionEv
 				rectangle.setFill(Color.WHITE);
 				rectangle.setStroke(Color.BLACK);
 				button.setGraphic(rectangle);
-				button.setText(null);
+				button.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+
 
 			}
 			else if (label == "Square") {
@@ -50,23 +52,30 @@ public class ShapeChooserPanel extends GridPane implements EventHandler<ActionEv
 				square.setFill(Color.WHITE);
 				square.setStroke(Color.BLACK);
 				button.setGraphic(square);
-				button.setText(null);
+				button.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
 
 			}
 			else if (label == "Squiggle") {
 				javafx.scene.shape.Arc arc = new javafx.scene.shape.Arc();
 				arc.setCenterX(5.0f);
 				arc.setCenterY(0.0f);
-				arc.setRadiusX(10.0f);
-				arc.setRadiusY(10.0f);
+				arc.setRadiusX(5.0f); //changed from 10
+				arc.setRadiusY(5.0f);//changed from 10
 				arc.setStartAngle(0.0f);
 				arc.setLength(180.0f);
 				arc.setType(ArcType.OPEN);
 				arc.setStroke(Color.BLACK);
 				arc.setFill(null);
 				
+				javafx.scene.shape.ArcTo ArcTo = new javafx.scene.shape.ArcTo();
+				ArcTo.setRadiusX(5.0f);
+				ArcTo.setRadiusY(5.0f);
+				ArcTo.setAbsolute(false);
+				ArcTo.setX(5.0f);
+				ArcTo.setY(5.0f);
+				
 				button.setGraphic(arc);
-				button.setText(null);
+				button.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
 
 				
 			}
@@ -75,7 +84,7 @@ public class ShapeChooserPanel extends GridPane implements EventHandler<ActionEv
 				poly.getPoints().addAll(new Double[] {0.0,5.0,10.0,10.0,10.0,20.0,20.0,24.0});
 				poly.setStroke(Color.BLACK);
 				button.setGraphic(poly);
-				button.setText(null);
+				button.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
 
 			}
 		}

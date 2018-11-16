@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -141,5 +142,13 @@ public class View implements EventHandler<ActionEvent> {
 	@Override
 	public void handle(ActionEvent event) {
 		System.out.println(((MenuItem)event.getSource()).getText());
+		String command = ((MenuItem) event.getSource()).getText();
+		if (command == "Undo") {
+			this.model.Undo();
+		}
+		else if(command == "Redo") {
+			this.model.Redo();
+		}
+		
 	}
 }
