@@ -2,6 +2,10 @@ package ca.utoronto.utm.paint;
 
 import javafx.scene.input.MouseEvent;
 
+/**
+ * The strategy for creating rectangle to draw
+ *
+ */
 public class RectangleManipulatorStrategy extends ShapeManipulatorStrategy {
 	private Rectangle rectangle;
 
@@ -19,7 +23,7 @@ public class RectangleManipulatorStrategy extends ShapeManipulatorStrategy {
 		this.rectangle = new Rectangle(vertex, vertex);	
 		
 		setDefaultModifiers(this.rectangle);
-		this.getModel().addCommand(this.rectangle);
+		this.getModel().addCommand(new RectangleDrawingCommand(this.rectangle));
 	}
 
 	@Override
