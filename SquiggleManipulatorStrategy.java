@@ -2,6 +2,10 @@ package ca.utoronto.utm.paint;
 
 import javafx.scene.input.MouseEvent;
 
+/**
+ * The strategy for creating squiggles to draw
+ *
+ */
 public class SquiggleManipulatorStrategy extends ShapeManipulatorStrategy {
 	private Squiggle squiggle;
 
@@ -18,7 +22,7 @@ public class SquiggleManipulatorStrategy extends ShapeManipulatorStrategy {
 		Point p = new Point((int) e.getX(), (int) e.getY());
 		this.squiggle = new Squiggle(p);
 		setDefaultModifiers(this.squiggle);
-		this.getModel().addCommand(this.squiggle);
+		this.getModel().addCommand(new SquiggleDrawingCommand(this.squiggle));
 	}
 
 	@Override
