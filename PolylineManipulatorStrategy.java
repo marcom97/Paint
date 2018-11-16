@@ -3,8 +3,13 @@ package ca.utoronto.utm.paint;
 
 import javafx.scene.input.MouseEvent;
 
+/**
+ * The strategy for creating polylines to draw
+ *
+ */
 public class PolylineManipulatorStrategy extends ShapeManipulatorStrategy {
 	private Polyline polyline;
+	
 	@Override
 	protected void mouseDragged(MouseEvent e) {
 	}
@@ -20,12 +25,13 @@ public class PolylineManipulatorStrategy extends ShapeManipulatorStrategy {
 	@Override
 	protected void mouseClicked(MouseEvent e) {
 		if (this.polyline == null) {
-			this.polyline = new Polyline();
+			Point point = new Point((int) e.getX(), (int) e.getY());
+			this.polyline = new Polyline(point);
 			setDefaultModifiers(this.polyline);
-			this.getModel().addCommand(this.polyline);
-			
-
+			this.getModel().addCommand(new PolylineDrawingCommand(this.polyline));
+			return;
 		}
+		
 		Point point = new Point((int) e.getX(), (int) e.getY());
 		this.polyline.addPoint(point);
 		this.getPaintPanel().repaint();
@@ -43,8 +49,6 @@ public class PolylineManipulatorStrategy extends ShapeManipulatorStrategy {
 	@Override
 	protected void mouseExited(MouseEvent e) {
 
-
 	}
 	
-
 }

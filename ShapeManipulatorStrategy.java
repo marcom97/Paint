@@ -3,6 +3,11 @@ package ca.utoronto.utm.paint;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
+/**
+ * The base class for all shape manipulator strategies
+ * @author Marco Matamoros
+ *
+ */
 public abstract class ShapeManipulatorStrategy {
 	private PaintPanel paintPanel;
 	private PaintModel model;
@@ -49,11 +54,39 @@ public abstract class ShapeManipulatorStrategy {
 		s.setFilled(this.model.getFill());
 	}
 	
+	/**
+	 * Called when a mouse drag event was detected
+	 * @param e the event
+	 */
 	protected abstract void mouseDragged(MouseEvent e);
+	/**
+	 * Called when a mouse press event was detected
+	 * @param e the event
+	 */
 	protected abstract void mousePressed(MouseEvent e);
+	/**
+	 * Called when a mouse move event was detected
+	 * @param e the event
+	 */
 	protected abstract void mouseMoved(MouseEvent e);
+	/**
+	 * Called when a mouse click event was detected
+	 * @param e the event
+	 */
 	protected abstract void mouseClicked(MouseEvent e);
+	/**
+	 * Called when a mouse release event was detected
+	 * @param e the event
+	 */
 	protected abstract void mouseReleased(MouseEvent e);
+	/**
+	 * Called when a mouse enter event was detected
+	 * @param e the event
+	 */
 	protected abstract void mouseEntered(MouseEvent e);
+	/**
+	 * Called when a mouse exit event was detected
+	 * @param e the event
+	 */
 	protected abstract void mouseExited(MouseEvent e);
 }

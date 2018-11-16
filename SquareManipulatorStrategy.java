@@ -2,6 +2,11 @@ package ca.utoronto.utm.paint;
 
 import javafx.scene.input.MouseEvent;
 
+/**
+ * The strategy for creating squares to draw
+ * @author Marco Matamoros
+ *
+ */
 public class SquareManipulatorStrategy extends ShapeManipulatorStrategy {
 	private Rectangle square;
 	
@@ -50,7 +55,7 @@ public class SquareManipulatorStrategy extends ShapeManipulatorStrategy {
 		this.square = new Rectangle(vertex, vertex);	
 		
 		setDefaultModifiers(this.square);
-		this.getModel().addCommand(this.square);
+		this.getModel().addCommand(new RectangleDrawingCommand(this.square));
 	}
 
 	@Override

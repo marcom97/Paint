@@ -2,6 +2,10 @@ package ca.utoronto.utm.paint;
 
 import javafx.scene.canvas.GraphicsContext;
 
+/**
+ * A class to represent a Circle
+ *
+ */
 public class Circle extends Shape {
 	
 	private Point centre;
@@ -26,20 +30,5 @@ public class Circle extends Shape {
 
 	public void setRadius(int radius) {
 		this.radius = radius;
-	}
-
-	@Override
-	public void execute(GraphicsContext g) {
-		g.setLineWidth(this.getLineThickness());
-		g.setStroke(this.getColor());
-		g.setFill(this.getColor());
-		
-		int diameter = radius * 2;
-		if (this.getFilled()) {
-			g.fillOval((centre.getX() - radius), (centre.getY() - radius), diameter, diameter);		
-		}
-		else {
-			g.strokeOval((centre.getX() - radius), (centre.getY() - radius), diameter, diameter);		
-		}
 	}
 }

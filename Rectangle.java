@@ -3,6 +3,10 @@ package ca.utoronto.utm.paint;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 
+/**
+ * A class to represent a Rectangle
+ *
+ */
 public class Rectangle extends Shape {
 	
 	private Point vertex;
@@ -11,6 +15,11 @@ public class Rectangle extends Shape {
 	private int width;
 	private int height;
 	
+	/**
+	 * Creates a Rectangle given two opposite vertices of a rectangle
+	 * @param vertex the first vertex
+	 * @param oppositeVertex the vertex opposite to the first vertex
+	 */
 	public Rectangle(Point vertex, Point oppositeVertex) {
 		this.vertex = vertex;
 		this.oppositeVertex = oppositeVertex;
@@ -48,30 +57,27 @@ public class Rectangle extends Shape {
 		this.height = Math.abs(this.oppositeVertex.getY() - this.vertex.getY());
 	}
 
+	/**
+	 * Return the top left vertex of this
+	 * @return the top left vertex
+	 */
 	public Point getTopLeft() {
 		return this.topLeft;
 	}
 
+	/**
+	 * Return the width of this
+	 * @return the width
+	 */
 	public int getWidth() {
 		return this.width;
 	}
-
+	
+	/**
+	 * Return the height of this
+	 * @return the height
+	 */
 	public int getHeight() {
 		return this.height;
-	}
-
-	@Override
-	public void execute(GraphicsContext g) {
-		g.setLineWidth(this.getLineThickness());
-		g.setFill(this.getColor());
-		g.setStroke(this.getColor());
-
-		if (this.getFilled()) {
-			g.fillRect(topLeft.getX(), topLeft.getY(), width, height);
-		}
-
-		else {
-			g.strokeRect(topLeft.getX(), topLeft.getY(), width, height);
-		}
 	}
 }
