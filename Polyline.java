@@ -5,44 +5,31 @@ import java.util.ArrayList;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.StrokeLineCap;
 
+/**
+ * A class to represent a polyline
+ *
+ */
 public class Polyline extends Shape {
-	private ArrayList<Point> lstpoint = new ArrayList<Point>();
+	private ArrayList<Point> points = new ArrayList<Point>();
 	
-	public Polyline( ) {
-	 
+	/**
+	 * Create a new Polyline with the given point as its first point
+	 * @param p the first point
+	 */
+	public Polyline(Point p) {
+		points.add(p);
 	}
 	
+	/**
+	 * Add a new point to this
+	 * @param p the point to add
+	 */
 	public void addPoint(Point p) {
-		lstpoint.add(p);
+		points.add(p);
 	}
 	
-	public ArrayList<Point> getlist(){
-		return lstpoint;
-	}
-		
-	public Point get(int index) {
-		return lstpoint.get(index);
+	public ArrayList<Point> getPoints(){
+		return points;
 	}
 	
-	public void set(int index, Point p) {
-		lstpoint.set(index, p);
-	}
-	
-
-	@Override
-	public void execute(GraphicsContext g) {
-		g.setStroke(this.getColor());
-		g.setLineWidth(this.getLineThickness());
-		g.setLineCap(StrokeLineCap.ROUND);
-		
-		for (int i = 0; i < lstpoint.size() - 1; i++) {
-			Point p1 = lstpoint.get(i);
-			Point p2 = lstpoint.get(i + 1);
-			
-			g.strokeLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
-		
-		 		
-	}
-		g.setLineCap(StrokeLineCap.SQUARE);
-	}
 }
