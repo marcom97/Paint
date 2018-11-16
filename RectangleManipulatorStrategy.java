@@ -3,7 +3,7 @@ package ca.utoronto.utm.paint;
 import javafx.scene.input.MouseEvent;
 
 /**
- * The strategy for creating rectangle to draw
+ * The strategy for creating rectangles to draw
  *
  */
 public class RectangleManipulatorStrategy extends ShapeManipulatorStrategy {
